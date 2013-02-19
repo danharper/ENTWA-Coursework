@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{ideaBean.id}"/>
+		<f:event type="preRenderView" listener="#{ideaBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="View Idea"/>
+
+	<ui:define name="header">
+		Idea
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Idea
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="ideaBeanIdeaTitle" value="Title:"/>
+			<h:outputText id="ideaBeanIdeaTitle" value="#{ideaBean.idea.title}"/>
+			<h:outputText/>
+			<h:outputLabel for="ideaBeanIdeaDetails" value="Details:"/>
+			<h:outputText id="ideaBeanIdeaDetails" value="#{ideaBean.idea.details}"/>
+			<h:outputText/>
+			<h:outputLabel for="ideaBeanIdeaCreatedAt" value="Created At:"/>
+			<h:outputText id="ideaBeanIdeaCreatedAt" value="#{ideaBean.idea.createdAt}">
+				<f:convertDateTime type="both"/>
+			</h:outputText>
+			<h:outputText/>
+			<h:outputLabel for="ideaBeanIdeaAreas" value="Areas:"/>
+			<h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table" value="#{forgeview:asList(ideaBean.idea.areas)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title"/>
+					</f:facet>
+					<h:link outcome="/area/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitle" value="#{_item.title}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:outputText/>
+			<h:outputLabel for="ideaBeanIdeaPerson" value="Person:"/>
+			<h:link id="ideaBeanIdeaPerson" outcome="/person/view" value="#{ideaBean.idea.person}">
+				<f:param name="id" value="#{ideaBean.idea.person.id}"/>
+			</h:link>
+			<h:outputText/>
+			<h:outputLabel for="ideaBeanIdeaStateType" value="State Type:"/>
+			<h:outputText id="ideaBeanIdeaStateType" value="#{ideaBean.idea.stateType}"/>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>

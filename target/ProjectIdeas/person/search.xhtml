@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{personBean.page}"/>
+		<f:event type="preRenderView" listener="#{personBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Person entities"/>
+
+	<ui:define name="header">
+		Person
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Person entities
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="personBeanExampleEmail" value="Email:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleEmail" value="#{personBean.example.email}"/>
+							<h:message for="personBeanExampleEmail" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExamplePassword" value="Password:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExamplePassword" value="#{personBean.example.password}"/>
+							<h:message for="personBeanExamplePassword" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExampleContactName" value="Contact Name:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleContactName" value="#{personBean.example.contactName}"/>
+							<h:message for="personBeanExampleContactName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExampleCompanyName" value="Company Name:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleCompanyName" value="#{personBean.example.companyName}"/>
+							<h:message for="personBeanExampleCompanyName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="personBeanExampleProfile" value="Profile:"/>
+						<h:panelGroup>
+							<h:inputText id="personBeanExampleProfile" value="#{personBean.example.profile}"/>
+							<h:message for="personBeanExampleProfile" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{personBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{personBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="personBeanPageItems" styleClass="data-table" value="#{personBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Email"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemEmail" value="#{_item.email}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Password"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPassword" value="#{_item.password}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Contact Name"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemContactName" value="#{_item.contactName}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Company Name"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemCompanyName" value="#{_item.companyName}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Profile"/>
+					</f:facet>
+					<h:link outcome="/person/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemProfile" value="#{_item.profile}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{personBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>
