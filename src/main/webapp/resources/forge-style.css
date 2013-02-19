@@ -402,7 +402,7 @@ footer p {
 }
 
 #content .button:hover, #content .buttons a:hover {
-	background-color: #979026;
+	/*background-color: #979026;*/
 }
 
 #content .paginator {
