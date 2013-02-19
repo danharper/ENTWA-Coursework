@@ -31,6 +31,7 @@ body {
 	font-size:13px;
     text-shadow: 0 1px 0 #efefef;
 	padding-top:50px;
+        background: url(background.png) #eee repeat;
 }
 
 #container {
@@ -126,6 +127,10 @@ label {
     border-radius: 4px 4px 4px 4px;
     box-shadow: 0 2px 4px #000000;
 	padding: 0 10px 20px 10px;
+        border-radius: 1px;
+        background: #f4f4f4;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 footer {
@@ -421,7 +426,7 @@ footer p {
     padding-bottom: 10px;
 	}
 #content h2 {
-	color:#867f10;
+	/*color:#44BCEA;*/
 	line-height:46px;
 	padding-top:5px;
 	border-top:1px solid #ccc;	
@@ -519,14 +524,14 @@ p.logo {
 }
 .navbar .nav > li > a:hover,
 .navbar .nav > li > a.current {
-	color:#8ebf3a;
+	/*color:#8ebf3a;*/
 }
 .navbar .brand {
-	font-weight:bold;
+	/*font-weight:bold;*/
 	text-shadow:0 1px 0 #000;
 	text-decoration:none;
 }
-.navbar-inner {
+/*.navbar-inner {
   	background-image: -moz-linear-gradient(top, #083847, #04202E);
   	background-image: -ms-linear-gradient(top, #083847, #04202E);
   	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#083847), to(#04202E));
@@ -535,7 +540,7 @@ p.logo {
   	background-image: linear-gradient(top, #083847, #04202E);
 	background-image: -moz-linear-gradient(center top , #083847, #04202E);
 	border-top:2px solid #000000;
-}
+}*/
 
 .navbar-fixed-top .brand {
 	color:#FFF;	
@@ -595,10 +600,10 @@ button::-moz-focus-inner {
 }
 
 
-.btn-primary {
-  	background-color: #817B10;/* dk gold */
+/*.btn-primary {
+  	background-color: #817B10; dk gold 
   	*background-color: #817B10;
-  	background-image: -ms-linear-gradient(top, #B0A826, #979026);/* light gold, med gold */
+  	background-image: -ms-linear-gradient(top, #B0A826, #979026); light gold, med gold 
   	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#B0A826), to(#979026));
   	background-image: -webkit-linear-gradient(top, #B0A826, #979026);
   	background-image: -o-linear-gradient(top, #B0A826, #979026);
@@ -658,7 +663,7 @@ a.btn-primary:hover {
 	color:#fff!important;
 	background:#817B10;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
+}*/
 
 
 
