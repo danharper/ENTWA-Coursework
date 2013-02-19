@@ -170,12 +170,13 @@ footer p {
 }
  
 #navigation ul {
-	padding: 1px;
-	border-radius: 5px;
+	padding: 10px;
+	border-radius: 1px;
 	text-align:left;
 	margin-left: 0;
 	background-color:#fff;
-	box-shadow:0px 1px 3px #afafaf;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #navigation ul li {
@@ -196,8 +197,15 @@ footer p {
 	margin-top:5px;
 }
 #navigation a {
-	padding-left: 15px;
-	color: #444444;
+	padding-left: 0px;
+	color: #1681D2;
+        font-weight: normal;
+}
+#navigation strong {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
 }
 #navigation li.nav-header a {
 	margin-left:-10px;	
