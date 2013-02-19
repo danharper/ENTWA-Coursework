@@ -36,9 +36,6 @@ public class Idea implements Serializable
    @Column
    private String details;
 
-   @Column
-   private int state;
-
    @Temporal(TemporalType.TIMESTAMP)
    private Date createdAt;
 
@@ -47,6 +44,9 @@ public class Idea implements Serializable
 
    @ManyToOne
    private Person person;
+
+   @Column
+   private int stateType;
 
    public Long getId()
    {
@@ -120,16 +120,6 @@ public class Idea implements Serializable
       this.details = details;
    }
 
-   public int getState()
-   {
-      return this.state;
-   }
-
-   public void setState(final int state)
-   {
-      this.state = state;
-   }
-
    public Date getCreatedAt()
    {
       return this.createdAt;
@@ -138,18 +128,6 @@ public class Idea implements Serializable
    public void setCreatedAt(final Date createdAt)
    {
       this.createdAt = createdAt;
-   }
-
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (title != null && !title.trim().isEmpty())
-         result += "title: " + title;
-      if (details != null && !details.trim().isEmpty())
-         result += ", details: " + details;
-      result += ", state: " + state;
-      return result;
    }
 
    public Set<Area> getAreas()
@@ -170,5 +148,27 @@ public class Idea implements Serializable
    public void setPerson(final Person person)
    {
       this.person = person;
+   }
+
+   public int getStateType()
+   {
+      return this.stateType;
+   }
+
+   public void setStateType(final int stateType)
+   {
+      this.stateType = stateType;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (title != null && !title.trim().isEmpty())
+         result += "title: " + title;
+      if (details != null && !details.trim().isEmpty())
+         result += ", details: " + details;
+      result += ", stateType: " + stateType;
+      return result;
    }
 }
