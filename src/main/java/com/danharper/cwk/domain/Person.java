@@ -149,18 +149,7 @@ public class Person implements Serializable
    @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (email != null && !email.trim().isEmpty())
-         result += "email: " + email;
-      if (password != null && !password.trim().isEmpty())
-         result += ", password: " + password;
-      if (contactName != null && !contactName.trim().isEmpty())
-         result += ", contactName: " + contactName;
-      if (companyName != null && !companyName.trim().isEmpty())
-         result += ", companyName: " + companyName;
-      if (profile != null && !profile.trim().isEmpty())
-         result += ", profile: " + profile;
-      return result;
+      return contactName + " - " + companyName;
    }
 
    public Set<Idea> getIdeas()

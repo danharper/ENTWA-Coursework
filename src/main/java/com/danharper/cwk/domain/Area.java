@@ -96,10 +96,7 @@ public class Area implements Serializable
    @Override
    public String toString()
    {
-      String result = getClass().getSimpleName() + " ";
-      if (title != null && !title.trim().isEmpty())
-         result += "title: " + title;
-      return result;
+      return title;
    }
 
    public Set<Idea> getIdeas()
