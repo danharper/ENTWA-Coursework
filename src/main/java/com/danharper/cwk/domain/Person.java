@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 
 @Entity
-public class User implements Serializable
+public class Person implements Serializable
 {
 
    @Id
@@ -41,7 +41,7 @@ public class User implements Serializable
    @Column
    private String profile;
 
-   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
    private Set<Idea> ideas = new HashSet<Idea>();
 
    public Long getId()
@@ -81,7 +81,7 @@ public class User implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((User) that).id);
+         return id.equals(((Person) that).id);
       }
       return super.equals(that);
    }

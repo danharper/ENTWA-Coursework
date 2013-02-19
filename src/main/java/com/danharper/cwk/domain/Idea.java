@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.HashSet;
 import com.danharper.cwk.domain.Area;
 import javax.persistence.ManyToMany;
-import com.danharper.cwk.domain.User;
+import com.danharper.cwk.domain.Person;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -46,7 +46,7 @@ public class Idea implements Serializable
    private Set<Area> areas = new HashSet<Area>();
 
    @ManyToOne
-   private User user;
+   private Person person;
 
    public Long getId()
    {
@@ -162,13 +162,13 @@ public class Idea implements Serializable
       this.areas = areas;
    }
 
-   public User getUser()
+   public Person getPerson()
    {
-      return this.user;
+      return this.person;
    }
 
-   public void setUser(final User user)
+   public void setPerson(final Person person)
    {
-      this.user = user;
+      this.person = person;
    }
 }
