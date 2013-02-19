@@ -324,7 +324,7 @@ footer p {
 	font-weight: bold;
 }
 
-#content .data-table {
+/*#content .data-table {
 	width: 100%;
 	border: 1px solid #cccccc;
 	margin-bottom: 7px;
@@ -358,7 +358,7 @@ footer p {
 	display: block;
 	color: #5b5b5b;
 	text-decoration: none;
-}
+}*/
 
 #content .remove-column {
 	width: 1%;
@@ -684,7 +684,7 @@ input, textarea, select, .uneditable-input {
 #ticketSummaryView {
 	padding:0px 0px 25px 0;
 }
-.table-bordered tr {
+/*.table-bordered tr {
 	font-size:13px;
 	color:#666;	
 }
@@ -692,6 +692,9 @@ input, textarea, select, .uneditable-input {
 	font-size:13px;
 	color:#333;	
 	background-color:#edf4ea;
+}*/
+.table {
+    border-radius: 1px;
 }
 h2.page-header {
 	border-bottom:1px solid #757575;
