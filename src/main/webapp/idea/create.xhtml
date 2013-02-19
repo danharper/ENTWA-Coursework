@@ -60,7 +60,7 @@
 				<h:outputLabel for="ideaBeanIdeaAreas" value="Areas:"/>
 				<h:panelGroup>
 					<ui:param name="_collection" value="#{ideaBean.idea.areas}"/>
-					<h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+					<h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Title"/>

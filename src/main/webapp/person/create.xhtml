@@ -70,7 +70,7 @@
 				<h:outputLabel for="personBeanPersonIdeas" value="Ideas:"/>
 				<h:panelGroup>
 					<ui:param name="_collection" value="#{personBean.person.ideas}"/>
-					<h:dataTable id="personBeanPersonIdeas" styleClass="data-table" value="#{forgeview:asList(_collection)}" var="_item">
+					<h:dataTable id="personBeanPersonIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Title"/>
