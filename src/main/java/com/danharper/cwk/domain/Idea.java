@@ -37,7 +37,7 @@ public class Idea implements Serializable
    private String details;
 
    @Column
-   private int state;
+   private int stateType;
 
    @Temporal(TemporalType.TIMESTAMP)
    private Date createdAt;
@@ -120,14 +120,14 @@ public class Idea implements Serializable
       this.details = details;
    }
 
-   public int getState()
+   public int getStateType()
    {
-      return this.state;
+      return this.stateType;
    }
 
-   public void setState(final int state)
+   public void setStateType(final int stateType)
    {
-      this.state = state;
+      this.stateType = stateType;
    }
 
    public Date getCreatedAt()
@@ -148,7 +148,7 @@ public class Idea implements Serializable
          result += "title: " + title;
       if (details != null && !details.trim().isEmpty())
          result += ", details: " + details;
-      result += ", state: " + state;
+      result += ", stateType: " + stateType;
       return result;
    }
 
