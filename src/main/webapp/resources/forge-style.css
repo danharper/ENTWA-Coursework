@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-	padding-top: 55px;
+	padding-top: 25px;
 }
 
 
@@ -419,10 +419,10 @@ footer p {
 
 #content h1 {
 	border-bottom: 1px solid #ffffff;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 49px;
+    /*font-family: 'Open Sans', sans-serif;*/
+    /*font-size: 49px;*/
     font-weight: 300;
-    letter-spacing: -2px;
+    /*letter-spacing: -2px;*/
     padding-bottom: 10px;
 	}
 #content h2 {
