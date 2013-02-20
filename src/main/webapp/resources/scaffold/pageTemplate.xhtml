@@ -1,66 +1,76 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-	<title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
-	<link rel="icon" href="#{resource['favicon.ico']}" />
-	<h:outputStylesheet name="bootstrap.css" />
-	<h:outputStylesheet name="forge-style.css" />
-</h:head>
+    <h:head>
+        <title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
+        <link rel="icon" href="#{resource['favicon.ico']}" />
+        <!--
+        <h:outputStylesheet name="bootstrap.css" />
+        <h:outputStylesheet name="forge-style.css" />
+        -->
+        <h:outputStylesheet name="bootstrap-cosmo.css" />
+        <h:outputStylesheet name="style.css" />
+    </h:head>
 
-<h:body>
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">Project Ideas</h:link>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-                                                <li><h:link outcome="/idea/search" value="Ideas"/></li>
-						<li><h:link outcome="/area/search" value="Areas"/></li>
-                                                <li><h:link outcome="/person/search" value="Companies"/></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+    <h:body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">Project Ideas</h:link>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><h:link outcome="/idea/search" value="Ideas"/></li>
+                            <li><h:link outcome="/area/search" value="Areas"/></li>
+                            <li><h:link outcome="/person/search" value="Companies"/></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<div class="container forgecontainer">
-		<div id="navigation">
-			<ul>
-                                <li>
-                                	<strong>Account</strong>
-                                </li>
-				<li>
-					<h:link outcome="/area/search" value="Manage my Project Ideas"/>
-				</li>
-				<li>
-					<h:link outcome="/idea/search" value="Add a Projecct Idea"/>
-				</li>
-				<li>
-					<h:link outcome="/person/search" value="My Profile"/>
-				</li>
-			</ul>
-		</div>
+        <div class="container">
+            <div class="row">
+                <div id="content" class="span9">
+                    <h1>
+                        <ui:insert name="header" />
+                    </h1>
+                    <h2>
+                        <ui:insert name="subheader" />
+                    </h2>
 
-		<div id="content">
-			<h1>
-				<ui:insert name="header" />
-			</h1>
-			<h2>
-				<ui:insert name="subheader" />
-			</h2>
+                    <ui:insert name="main" />
+                </div>
 
-			<ui:insert name="main" />
-		</div>
-	</div>
+                <div id="navigation" class="span3">
+                    <div class="well" style="padding: 8px 0;">
+                        <ul class="nav nav-list">
+                            <li class="nav-header">My Project Ideas</li>
+                            <li><h:link outcome="/idea/search" value="Add a Project Idea"/></li>
+                            <li><h:link outcome="/area/search" value="View Project Ideas"/></li>
 
-	<footer>
-		<div id="footer-wrapper">
-                    <p>&#169; 456040 - <a href="http://forge.jboss.org/docs/important_plugins/ui-scaffolding.html">Customize</a> - <a href="https://community.jboss.org/en/forge">Forums</a></p>
-	    </div>
-	</footer>
 
-</h:body>
+                            <li class="nav-header">My Account</li>
+                            <li><h:link outcome="/person/search" value="Profile"/></li>
+                            <li><a href="#">Logout</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Help</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <footer id="footer">
+                <p class="pull-right"><a href="#top">Back to top</a></p>
+                &#169; 456040 &#8211;
+                <a href="http://forge.jboss.org/docs/important_plugins/ui-scaffolding.html">Customize</a> &#8211;
+                <a href="https://community.jboss.org/en/forge">Forums</a>
+            </footer>
+
+        </div>
+
+    </h:body>
 </html>
