@@ -33,12 +33,21 @@
         <div class="container">
             <div class="row">
                 <div id="content" class="span9">
-                    <h1>
-                        <ui:insert name="header" />
-                    </h1>
-                    <h2>
-                        <ui:insert name="subheader" />
-                    </h2>
+                    <h1><ui:insert name="header" /></h1>
+                    <h2><ui:insert name="subheader" /></h2>
+                    <br/>
+
+                    <div class="row">
+                        <div class="span7">
+                            <ul class="breadcrumb">
+                                <li><a href="#">Home</a> <span class="divider">/</span></li>
+                                <ui:insert name="breadcrumb" />
+                            </ul>
+                        </div>
+                        <div class="span2">
+                            <ui:insert name="action" />
+                        </div>
+                    </div>
 
                     <ui:insert name="main" />
                 </div>

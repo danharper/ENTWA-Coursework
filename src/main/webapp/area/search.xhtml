@@ -13,14 +13,19 @@
 
     <ui:param name="pageTitle" value="Search Idea Areas"/>
 
-    <ui:define name="header">
-        Idea Areas
-        <h:link value="Create New" outcome="/area/create" styleClass="btn btn-primary pull-right"/>
+    <ui:define name="header">Idea Areas</ui:define>
+
+    <ui:define name="breadcrumb">
+        <li class="active">Areas</li>
+    </ui:define>
+    
+    <ui:define name="action">
+        <h:link value="Add New Area" outcome="/area/create" styleClass="btn btn-primary pull-right"/>
     </ui:define>
 
     <ui:define name="footer"/>
 
-    <ui:define name="main">        
+    <ui:define name="main">
         <h:form id="search" styleClass="well form-search">
             <f:validateBean disabled="true">
                 <h:inputText id="areaBeanExampleTitle" value="#{areaBean.example.title}" styleClass="input-medium search-query"/>
@@ -31,7 +36,7 @@
             </f:validateBean>
         </h:form>
 
-        <h:dataTable id="areaBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{areaBean.pageItems}" var="_item">
+        <h:dataTable id="areaBeanPageItems" styleClass="table table-striped table-bordered" value="#{areaBean.pageItems}" var="_item">
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="Title"/>
@@ -42,11 +47,11 @@
                 </h:link>
             </h:column>
         </h:dataTable>
-        
+
         <ui:include src="/resources/scaffold/paginator.xhtml">
             <ui:param name="paginatorBean" value="#{areaBean}"/>
         </ui:include>
-        
+
     </ui:define>
 
 </ui:composition>
