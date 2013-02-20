@@ -44,20 +44,20 @@
             </h:column>
             <h:column>
                 <f:facet name="header">
-                    <h:outputText value="Contact"/>
-                </f:facet>
-                <h:link outcome="/person/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemContactName" value="#{_item.contactName}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
                     <h:outputText value="Company"/>
                 </f:facet>
                 <h:link outcome="/person/view">
                     <f:param name="id" value="#{_item.id}"/>
                     <h:outputText id="itemCompanyName" value="#{_item.companyName}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Contact"/>
+                </f:facet>
+                <h:link outcome="/person/view">
+                    <f:param name="id" value="#{_item.id}"/>
+                    <h:outputText id="itemContactName" value="#{_item.contactName}"/>
                 </h:link>
             </h:column>
         </h:dataTable>
