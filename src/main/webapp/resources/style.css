@@ -1,3 +1,18 @@
 body {
     padding-top: 60px;
 }
+
+dl {
+    overflow: hidden;
+}
+
+dt {
+    width: 100px;
+    float: left;
+    text-align: right;
+    font-weight: normal;
+}
+
+dd {
+    margin-left: 120px;
+}
