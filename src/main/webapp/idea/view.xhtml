@@ -79,6 +79,48 @@
             <dt>State</dt>
             <dd>#{ideaBean.idea.state}</dd>
         </dl>
+
+        <hr/>
+
+        <h:form styleClass="well form-horizontal">
+            <fieldset>
+                <legend>Enquire about this Project Idea</legend>
+                <div class="control-group">
+                    <label class="control-label" for="input01">Name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="input01" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01">Email</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="input01" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01">Student #</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="input01" />
+                        <p class="help-block">Your Portsmouth University Jupiter ID number.</p>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="textarea">Comments</label>
+                    <div class="controls">
+                        <textarea class="span5" id="textarea" rows="9"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send Enquiry</button>
+                    <button type="reset" class="btn">Cancel</button>
+                </div>
+            </fieldset>
+
+        </h:form>
     </ui:define>
 
 </ui:composition>
