@@ -54,10 +54,10 @@ public class Idea implements Serializable
    
    public Idea()
    {
-       stateMap.put(0, "Pending");
-       stateMap.put(1, "Active");
-       stateMap.put(2, "Assigned");
-       stateMap.put(3, "Withdrawn");
+       stateMap.put(1, "Pending");
+       stateMap.put(2, "Active");
+       stateMap.put(3, "Assigned");
+       stateMap.put(4, "Withdrawn");
    }
 
    public Long getId()
