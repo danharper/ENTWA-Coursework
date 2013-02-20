@@ -109,7 +109,7 @@
 					</f:facet>
 					<h:link outcome="/idea/view">
 						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemStateType" value="#{_item.stateType}"/>
+						<h:outputText id="itemStateType" value="#{_item.getState()}"/>
 					</h:link>
 				</h:column>
 			</h:dataTable>

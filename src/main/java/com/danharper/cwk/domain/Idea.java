@@ -9,14 +9,15 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 import java.lang.Override;
 import java.util.Date;
+import java.util.HashMap;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Set;
 import java.util.HashSet;
-import com.danharper.cwk.domain.Area;
+import java.util.Map;
 import javax.persistence.ManyToMany;
-import com.danharper.cwk.domain.Person;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Idea implements Serializable
@@ -47,6 +48,17 @@ public class Idea implements Serializable
 
    @Column
    private int stateType;
+   
+   @Transient
+   private Map<Integer, String> stateMap = new HashMap<Integer, String>();
+   
+   public Idea()
+   {
+       stateMap.put(0, "Pending");
+       stateMap.put(1, "Active");
+       stateMap.put(2, "Assigned");
+       stateMap.put(3, "Withdrawn");
+   }
 
    public Long getId()
    {
@@ -158,6 +170,11 @@ public class Idea implements Serializable
    public void setStateType(final int stateType)
    {
       this.stateType = stateType;
+   }
+   
+   public String getState()
+   {
+       return stateMap.get(this.stateType);
    }
 
    @Override
