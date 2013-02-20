@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <h:head>
         <title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
@@ -44,6 +45,7 @@
                                 <ui:insert name="breadcrumb" />
                             </ul>
                         </div>
+                        
                         <div class="span2">
                             <ui:insert name="action" />
                         </div>
