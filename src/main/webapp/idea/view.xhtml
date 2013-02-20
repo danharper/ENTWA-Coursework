@@ -23,7 +23,7 @@
     </ui:define>
 
     <ui:define name="action">
-        <h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary pull-right"/>
+        <h:link value="Modify Details" outcome="create" includeViewParams="true" styleClass="btn btn-primary pull-right"/>
     </ui:define>
 
     <ui:define name="footer"/>
@@ -48,69 +48,37 @@
                 </h:link>
             </dd>
         </dl>
-        
+
         <dl>
             <dt>Areas</dt>
             <dd>
                 <ui:repeat value="#{forgeview:asList(ideaBean.idea.areas)}" var="_area">
-                    #{_area.title}
+                    <h:link outcome="/area/view" value="#{_area.title}">
+                        <f:param name="id" value="#{_area.id}"/>
+                    </h:link>,
                 </ui:repeat>
             </dd>
         </dl>
-            
+
         <dl>
             <dt>Details</dt>
             <dd>#{ideaBean.idea.details}</dd>
         </dl>
-        
+
         <dl>
             <dt>Created</dt>
             <dd>
                 <h:outputText value="#{ideaBean.idea.createdAt}">
                     <f:convertDateTime/>
                 </h:outputText>
+                February 19th, 2013
             </dd>
         </dl>
 
-        <h:panelGrid columnClasses="label,component,required" columns="3">
-            <h:outputLabel for="ideaBeanIdeaTitle" value="Title:"/>
-            <h:outputText id="ideaBeanIdeaTitle" value="#{ideaBean.idea.title}"/>
-            <h:outputText/>
-            <h:outputLabel for="ideaBeanIdeaDetails" value="Details:"/>
-            <h:outputText id="ideaBeanIdeaDetails" value="#{ideaBean.idea.details}"/>
-            <h:outputText/>
-            <h:outputLabel for="ideaBeanIdeaCreatedAt" value="Created At:"/>
-            <h:outputText id="ideaBeanIdeaCreatedAt" value="#{ideaBean.idea.createdAt}">
-                <f:convertDateTime type="both"/>
-            </h:outputText>
-            <h:outputText/>
-            <h:outputLabel for="ideaBeanIdeaAreas" value="Areas:"/>
-            <h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(ideaBean.idea.areas)}" var="_item">
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Title"/>
-                    </f:facet>
-                    <h:link outcome="/area/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemTitle" value="#{_item.title}"/>
-                    </h:link>
-                </h:column>
-            </h:dataTable>
-            <h:outputText/>
-            <h:outputLabel for="ideaBeanIdeaPerson" value="Person:"/>
-            <h:link id="ideaBeanIdeaPerson" outcome="/person/view" value="#{ideaBean.idea.person}">
-                <f:param name="id" value="#{ideaBean.idea.person.id}"/>
-            </h:link>
-            <h:outputText/>
-            <h:outputLabel for="ideaBeanIdeaStateType" value="State Type:"/>
-            <h:outputText id="ideaBeanIdeaStateType" value="#{ideaBean.idea.stateType}"/>
-            <h:outputText/>
-        </h:panelGrid>
-
-        <div class="buttons">
-            <h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
-            <h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
-        </div>
+        <dl>
+            <dt>State</dt>
+            <dd>#{ideaBean.idea.state}</dd>
+        </dl>
     </ui:define>
 
 </ui:composition>
