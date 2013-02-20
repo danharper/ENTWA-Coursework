@@ -20,42 +20,33 @@
 
     <ui:define name="footer"/>
 
-    <ui:define name="main">
-        <h:form id="search">
+    <ui:define name="main">        
+        <h:form id="search" styleClass="well form-search">
             <f:validateBean disabled="true">
-                <h:panelGroup styleClass="search">
-
-                    <h:panelGrid columnClasses="label,component,required" columns="3">
-                        <h:outputLabel for="areaBeanExampleTitle" value="Title:"/>
-                        <h:panelGroup>
-                            <h:inputText id="areaBeanExampleTitle" value="#{areaBean.example.title}"/>
-                            <h:message for="areaBeanExampleTitle" styleClass="error"/>
-                        </h:panelGroup>
-                        <h:outputText/>
-                    </h:panelGrid>
-                    <h:panelGroup styleClass="buttons">
-                        <h:commandLink value="Search" action="#{areaBean.search}" styleClass="btn btn-primary"/>
-                        <h:commandLink value="Create New" action="#{areaBean.create}" styleClass="btn btn-primary"/>
-                    </h:panelGroup>
-                </h:panelGroup>
+                <h:inputText id="areaBeanExampleTitle" value="#{areaBean.example.title}" styleClass="input-medium search-query"/>
+                <h:commandLink value="Search" action="#{areaBean.search}" styleClass="btn"/>
+                <ui:remove>
+                    <h:commandLink value="Create New" action="#{areaBean.create}" styleClass="btn btn-primary"/>
+                </ui:remove>
             </f:validateBean>
-
-            <h:dataTable id="areaBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{areaBean.pageItems}" var="_item">
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Title"/>
-                    </f:facet>
-                    <h:link outcome="/area/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemTitle" value="#{_item.title}"/>
-                    </h:link>
-                </h:column>
-            </h:dataTable>
-            <ui:include src="/resources/scaffold/paginator.xhtml">
-                <ui:param name="paginatorBean" value="#{areaBean}"/>
-            </ui:include>
         </h:form>
 
+        <h:dataTable id="areaBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{areaBean.pageItems}" var="_item">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Title"/>
+                </f:facet>
+                <h:link outcome="/area/view">
+                    <f:param name="id" value="#{_item.id}"/>
+                    <h:outputText id="itemTitle" value="#{_item.title}"/>
+                </h:link>
+            </h:column>
+        </h:dataTable>
+        
+        <ui:include src="/resources/scaffold/paginator.xhtml">
+            <ui:param name="paginatorBean" value="#{areaBean}"/>
+        </ui:include>
+        
     </ui:define>
 
 </ui:composition>
