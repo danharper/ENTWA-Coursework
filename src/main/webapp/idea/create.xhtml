@@ -30,90 +30,130 @@
         </c:choose>
     </ui:define>
 
+    <ui:define name="breadcrumb">
+        <li><h:link value="Ideas" outcome="/idea/search"/>  <span class="divider">/</span></li>
+        <li class="active">
+            <c:choose>
+                <c:when test="#{!empty ideaBean.id}">
+                    Edit Project Idea
+                </c:when>
+                <c:otherwise>
+                    Add New
+                </c:otherwise>
+            </c:choose>
+        </li>
+    </ui:define>
+
+    <ui:define name="action">
+        <h:commandButton value="Delete Idea" action="#{ideaBean.delete}" styleClass="btn btn-danger pull-right"/>
+    </ui:define>
+
     <ui:define name="footer"/>
 
     <ui:define name="main">
-        <h:form id="create">
-            <h:messages globalOnly="true" styleClass="error"/>
+        <h:form id="create" styleClass="well form-horizontal">
+            <fieldset>
+                <legend>
+                    <c:choose>
+                        <c:when test="#{!empty ideaBean.id}">
+                            Edit &ldquo;#{ideaBean.idea.title}&rdquo;
+                        </c:when>
+                        <c:otherwise>
+                            Add New
+                        </c:otherwise>
+                    </c:choose>
+                </legend>
 
-            <h:panelGrid columnClasses="label,component,required" columns="3">
-                <h:outputLabel for="ideaBeanIdeaTitle" value="Title:"/>
-                <h:panelGroup>
-                    <h:inputText id="ideaBeanIdeaTitle" value="#{ideaBean.idea.title}"/>
-                    <h:message for="ideaBeanIdeaTitle" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="ideaBeanIdeaDetails" value="Details:"/>
-                <h:panelGroup>
-                    <h:inputText id="ideaBeanIdeaDetails" value="#{ideaBean.idea.details}"/>
-                    <h:message for="ideaBeanIdeaDetails" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="ideaBeanIdeaCreatedAt" value="Created At:"/>
-                <h:panelGroup>
-                    <h:inputText id="ideaBeanIdeaCreatedAt" value="#{ideaBean.idea.createdAt}">
-                        <f:convertDateTime type="both"/>
-                    </h:inputText>
-                    <h:message for="ideaBeanIdeaCreatedAt" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="ideaBeanIdeaAreas" value="Areas:"/>
-                <h:panelGroup>
-                    <ui:param name="_collection" value="#{ideaBean.idea.areas}"/>
-                    <h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Title"/>
-                            </f:facet>
-                            <h:link outcome="/area/view">
-                                <f:param name="id" value="#{_item.id}"/>
-                                <h:outputText id="itemTitle" value="#{_item.title}"/>
-                            </h:link>
-                        </h:column>
-                        <h:column footerClass="remove-column" headerClass="remove-column">
-                            <h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
-                        <h:selectOneMenu converter="#{areaBean.converter}" id="ideaBeanIdeaAreasSelect" value="#{requestScope['ideaBeanIdeaAreasSelect']}">
+                <h:messages globalOnly="true" styleClass="error"/>
+
+                <div class="control-group">
+                    <h:outputLabel for="ideaBeanIdeaTitle" value="Title" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputText id="ideaBeanIdeaTitle" value="#{ideaBean.idea.title}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="ideaBeanIdeaTitle" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="ideaBeanIdeaDetails" value="Details" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputTextarea id="ideaBeanIdeaDetails" value="#{ideaBean.idea.details}" styleClass="span5" rows="9"/>
+                        <span class="help-inline"><h:message for="ideaBeanIdeaDetails" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="ideaBeanIdeaAreas" value="Areas" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:panelGroup>
+                            <ui:param name="_collection" value="#{ideaBean.idea.areas}"/>
+                            <h:dataTable id="ideaBeanIdeaAreas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Title"/>
+                                    </f:facet>
+                                    <h:link outcome="/area/view">
+                                        <f:param name="id" value="#{_item.id}"/>
+                                        <h:outputText id="itemTitle" value="#{_item.title}"/>
+                                    </h:link>
+                                </h:column>
+                                <h:column footerClass="remove-column" headerClass="remove-column">
+                                    <h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button" value="Remove"/>
+                                </h:column>
+                            </h:dataTable>
+                            <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+                                <h:selectOneMenu converter="#{areaBean.converter}" id="ideaBeanIdeaAreasSelect" value="#{requestScope['ideaBeanIdeaAreasSelect']}">
+                                    <f:selectItem/>
+                                    <f:selectItems value="#{areaBean.all}"/>
+                                </h:selectOneMenu>
+                                <h:commandLink action="#{_collection.add(requestScope['ideaBeanIdeaAreasSelect'])}" id="ideaBeanIdeaAreasAdd" onclick="if (document.getElementById(document.forms[0].id+':ideaBeanIdeaAreasSelect').selectedIndex &lt; 1) { alert('Must select a Area'); return false; }" styleClass="add-button" value="Add"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="ideaBeanIdeaPerson" value="Company" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:selectOneMenu converter="#{personBean.converter}" id="ideaBeanIdeaPerson" value="#{ideaBean.idea.person}">
                             <f:selectItem/>
-                            <f:selectItems value="#{areaBean.all}"/>
+                            <f:selectItems value="#{personBean.all}"/>
                         </h:selectOneMenu>
-                        <h:commandLink action="#{_collection.add(requestScope['ideaBeanIdeaAreasSelect'])}" id="ideaBeanIdeaAreasAdd" onclick="if (document.getElementById(document.forms[0].id+':ideaBeanIdeaAreasSelect').selectedIndex &lt; 1) { alert('Must select a Area'); return false; }" styleClass="add-button"/>
-                    </h:panelGrid>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="ideaBeanIdeaPerson" value="Person:"/>
-                <h:panelGroup>
-                    <h:selectOneMenu converter="#{personBean.converter}" id="ideaBeanIdeaPerson" value="#{ideaBean.idea.person}">
-                        <f:selectItem/>
-                        <f:selectItems value="#{personBean.all}"/>
-                    </h:selectOneMenu>
-                    <h:message for="ideaBeanIdeaPerson" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-                <h:outputLabel for="ideaBeanIdeaStateType" value="State Type:"/>
-                <h:panelGroup>
-                    <h:inputText id="ideaBeanIdeaStateType" value="#{ideaBean.idea.stateType}"/>
-                    <h:message for="ideaBeanIdeaStateType" styleClass="error"/>
-                </h:panelGroup>
-                <h:outputText/>
-            </h:panelGrid>
+                        <span class="help-inline"><h:message for="ideaBeanIdeaPerson" styleClass="error"/></span>
+                    </div>
+                </div>
 
-            <div class="buttons">
-                <h:commandLink value="Save" action="#{ideaBean.update}" styleClass="btn btn-primary"/>
-                <c:choose>
-                    <c:when test="#{!empty ideaBean.id}">
-                        <h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
-                            <f:param name="id" value="#{ideaBean.id}"/>
-                        </h:link>
-                        <h:commandLink value="Delete" action="#{ideaBean.delete}" styleClass="btn btn-primary"/>
-                    </c:when>
-                    <c:otherwise>
-                        <h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                <div class="control-group">
+                    <h:outputLabel for="ideaBeanIdeaStateType" value="State" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:selectOneMenu id="ideaBeanIdeaStateType" styleClass="input-medium" value="#{ideaBean.idea.stateType}">
+                            <f:selectItem itemLabel="State&hellip;" itemValue="0" />
+                            <f:selectItem itemLabel="Pending" itemValue="1" />
+                            <f:selectItem itemLabel="Active" itemValue="2" />
+                            <f:selectItem itemLabel="Assigned" itemValue="3" />
+                            <f:selectItem itemLabel="Withdrawn" itemValue="4" />
+                        </h:selectOneMenu>
+                        <span class="help-inline"><h:message for="ideaBeanIdeaStateType" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <h:commandButton value="Save" action="#{ideaBean.update}" styleClass="btn btn-primary"/>
+                    &nbsp;
+                    <c:choose>
+                        <c:when test="#{!empty ideaBean.id}">
+                            <h:button value="Cancel" outcome="view" styleClass="btn">
+                                <f:param name="id" value="#{ideaBean.id}"/>
+                            </h:button>
+                            &nbsp;
+                            <h:commandButton value="Delete" action="#{ideaBean.delete}" styleClass="btn btn-small btn-danger"/>
+                        </c:when>
+                        <c:otherwise>
+                            <h:button value="Cancel" outcome="search" styleClass="btn"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </fieldset>
         </h:form>
     </ui:define>
 
