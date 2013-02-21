@@ -68,22 +68,20 @@
             </h:column>
             <h:column>
                 <f:facet name="header">
-                    <h:outputText value="Created At"/>
+                    <h:outputText value="Company"/>
                 </f:facet>
                 <h:link outcome="/idea/view">
                     <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
-                        <f:convertDateTime type="both"/>
-                    </h:outputText>
+                    <h:outputText id="itemPersonCompany" value="#{_item.person.companyName}"/>
                 </h:link>
             </h:column>
             <h:column>
                 <f:facet name="header">
-                    <h:outputText value="Person"/>
+                    <h:outputText value="Contact"/>
                 </f:facet>
                 <h:link outcome="/idea/view">
                     <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemPerson" value="#{_item.person}"/>
+                    <h:outputText id="itemPerson" value="#{_item.person.contactName}"/>
                 </h:link>
             </h:column>
             <h:column>
@@ -93,6 +91,17 @@
                 <h:link outcome="/idea/view">
                     <f:param name="id" value="#{_item.id}"/>
                     <h:outputText id="itemStateType" value="#{_item.getState()}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Created"/>
+                </f:facet>
+                <h:link outcome="/idea/view">
+                    <f:param name="id" value="#{_item.id}"/>
+                    <h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
+                        <f:convertDateTime type="both"/>
+                    </h:outputText>
                 </h:link>
             </h:column>
         </h:dataTable>
