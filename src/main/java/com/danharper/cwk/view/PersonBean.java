@@ -25,6 +25,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.danharper.cwk.domain.Person;
+import javax.faces.bean.ManagedProperty;
 
 /**
  * Backing bean for Person entities.
@@ -48,6 +49,7 @@ public class PersonBean implements Serializable
     * Support creating and retrieving Person entities
     */
 
+   @ManagedProperty(value="#{param.id}")
    private Long id;
 
    public Long getId()

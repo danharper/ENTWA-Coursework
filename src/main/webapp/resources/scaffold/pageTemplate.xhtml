@@ -2,15 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
         <title>#{empty pageTitle ? '{#pageTitle}' : pageTitle}</title>
         <link rel="icon" href="#{resource['favicon.ico']}" />
-        
-        <!--<h:outputStylesheet name="bootstrap.css" />-->
-        <!--<h:outputStylesheet name="forge-style.css" />-->
-        
+
         <h:outputStylesheet name="bootstrap-cosmo.css" />
         <h:outputStylesheet name="style.css" />
     </h:head>
@@ -22,9 +20,15 @@
                     <h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">Project Ideas</h:link>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li><h:link outcome="/idea/search" value="Ideas"/></li>
-                            <li><h:link outcome="/area/search" value="Areas"/></li>
-                            <li><h:link outcome="/person/search" value="Companies"/></li>
+                            <li class="#{view.viewId == '/idea/search.xhtml' ? 'active' : ''}">
+                                <h:link outcome="/idea/search" value="Ideas"/>
+                            </li>
+                            <li class="#{view.viewId == '/area/search.xhtml' ? 'active' : ''}">
+                                <h:link outcome="/area/search" value="Areas"/>
+                            </li>
+                            <li class="#{view.viewId == '/person/search.xhtml' ? 'active' : ''}">
+                                <h:link outcome="/person/search" value="Companies"/>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -45,7 +49,7 @@
                                 <ui:insert name="breadcrumb" />
                             </ul>
                         </div>
-                        
+
                         <div class="span2">
                             <ui:insert name="action" />
                         </div>
@@ -58,12 +62,23 @@
                     <div class="well" style="padding: 8px 0;">
                         <ul class="nav nav-list">
                             <li class="nav-header">My Project Ideas</li>
-                            <li><h:link outcome="/idea/create" value="Add a Project Idea"/></li>
-                            <li><h:link outcome="/area/search" value="View Project Ideas"/></li>
+                            <li class="#{view.viewId == '/idea/create.xhtml' ? 'active' : ''}">
+                                <h:link outcome="/idea/create" value="Add a Project Idea"/>
+                            </li>
+                            <li class="#{view.viewId == '/area/search.xhtml' ? 'active' : ''}">
+                                <h:link outcome="/area/search" value="View Project Ideas"/>
+                            </li>
 
 
                             <li class="nav-header">My Account</li>
-                            <li><h:link outcome="/person/search" value="Profile"/></li>
+                            <li class="
+                                #{view.viewId == '/person/view.xhtml' ? 'act' : ''}#{param.id == 2 ? 'ive' : ''}
+                            ">
+                                <h:link outcome="/person/view">
+                                    <f:param name="id" value="2"/>
+                                    <h:outputText value="Profile"/>
+                                </h:link>
+                            </li>
                             <li><a href="#">Logout</a></li>
                             <li class="divider"></li>
                             <li><a href="#">Help</a></li>
