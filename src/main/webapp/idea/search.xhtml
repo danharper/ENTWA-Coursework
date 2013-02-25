@@ -29,10 +29,12 @@
         <h:form id="search" styleClass="well form-search">
             <f:validateBean disabled="true">
                 <h:inputText id="ideaBeanExampleTitle" value="#{ideaBean.example.title}" styleClass="input-medium" placeholder="Title&hellip;" />
+                &nbsp;
                 <h:selectOneMenu id="ideaBeanExamplePerson" styleClass="input-medium" converter="#{personBean.converter}" value="#{ideaBean.example.person}">
                     <f:selectItem itemLabel="Person&hellip;" noSelectionOption="true" />
                     <f:selectItems value="#{personBean.all}" />
                 </h:selectOneMenu>
+                &nbsp;
                 <h:selectOneMenu id="ideaBeanExampleStateType" styleClass="input-medium" value="#{ideaBean.example.stateType}">
                     <f:selectItem itemLabel="State&hellip;" itemValue="0" />
                     <f:selectItem itemLabel="Pending" itemValue="1" />
@@ -40,6 +42,7 @@
                     <f:selectItem itemLabel="Assigned" itemValue="3" />
                     <f:selectItem itemLabel="Withdrawn" itemValue="4" />
                 </h:selectOneMenu>
+                &nbsp;
                 <h:commandLink value="Search" action="#{ideaBean.search}" styleClass="btn"/>
                 <ui:remove>
                     <h:commandLink value="Create New" action="#{ideaBean.create}" styleClass="btn btn-primary"/>
