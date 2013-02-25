@@ -11,4 +11,9 @@
 </forge>
 </jboss>
 </org>
+<forge>
+<analytics>
+<enabled>false</enabled>
+</analytics>
+</forge>
 </configuration>
