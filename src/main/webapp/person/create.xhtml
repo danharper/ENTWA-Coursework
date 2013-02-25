@@ -1,160 +1,146 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:forgeview="http://jboss.org/forge/view"	
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:forgeview="http://jboss.org/forge/view"	
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="id" value="#{personBean.id}"/>
-		<f:event type="preRenderView" listener="#{personBean.retrieve}"/>
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="id" value="#{personBean.id}"/>
+        <f:event type="preRenderView" listener="#{personBean.retrieve}"/>
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="Create Person"/>
+    <ui:param name="pageTitle" value="Create Company"/>
 
-	<ui:define name="header">
-		Person
-	</ui:define>
+    <ui:define name="header">Company</ui:define>
 
-	<ui:define name="subheader">
-		<c:choose>
-			<c:when test="#{!empty personBean.id}">
-				Edit existing Person
-			</c:when>
-			<c:otherwise>
-				Create a new Person
-			</c:otherwise>
-		</c:choose>
-	</ui:define>
+    <ui:define name="breadcrumb">
+        <li><h:link value="Companies" outcome="/person/search"/>  <span class="divider">/</span></li>
+        <li class="active">
+            <c:choose>
+                <c:when test="#{!empty personBean.id}">
+                    Edit Company
+                </c:when>
+                <c:otherwise>
+                    Add New
+                </c:otherwise>
+            </c:choose>
+        </li>
+    </ui:define>
 
-	<ui:define name="footer"/>
+    <ui:define name="action">
+        <h:commandButton value="Delete Company" action="#{personBean.delete}" styleClass="btn btn-danger pull-right"/>
+    </ui:define>
 
-	<ui:define name="main">
-		<h:form id="create">
-			<h:messages globalOnly="true" styleClass="error"/>
+    <ui:define name="footer"/>
 
-			<h:panelGrid columnClasses="label,component,required" columns="3">
-				<h:outputLabel for="personBeanPersonEmail" value="Email:"/>
-				<h:panelGroup>
-					<h:inputText id="personBeanPersonEmail" value="#{personBean.person.email}"/>
-					<h:message for="personBeanPersonEmail" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="personBeanPersonPassword" value="Password:"/>
-				<h:panelGroup>
-					<h:inputText id="personBeanPersonPassword" value="#{personBean.person.password}"/>
-					<h:message for="personBeanPersonPassword" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="personBeanPersonContactName" value="Contact Name:"/>
-				<h:panelGroup>
-					<h:inputText id="personBeanPersonContactName" value="#{personBean.person.contactName}"/>
-					<h:message for="personBeanPersonContactName" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="personBeanPersonCompanyName" value="Company Name:"/>
-				<h:panelGroup>
-					<h:inputText id="personBeanPersonCompanyName" value="#{personBean.person.companyName}"/>
-					<h:message for="personBeanPersonCompanyName" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="personBeanPersonProfile" value="Profile:"/>
-				<h:panelGroup>
-					<h:inputText id="personBeanPersonProfile" value="#{personBean.person.profile}"/>
-					<h:message for="personBeanPersonProfile" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="personBeanPersonIdeas" value="Ideas:"/>
-				<h:panelGroup>
-					<ui:param name="_collection" value="#{personBean.person.ideas}"/>
-					<h:dataTable id="personBeanPersonIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Title"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemTitle" value="#{_item.title}"/>
-							</h:link>
-							<f:facet name="footer">
-								<h:inputText id="ideaBeanAddTitle" value="#{ideaBean.add.title}"/>
-								<h:message for="ideaBeanAddTitle" styleClass="error"/>
-							</f:facet>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Details"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemDetails" value="#{_item.details}"/>
-							</h:link>
-							<f:facet name="footer">
-								<h:inputText id="ideaBeanAddDetails" value="#{ideaBean.add.details}"/>
-								<h:message for="ideaBeanAddDetails" styleClass="error"/>
-							</f:facet>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Created At"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
-									<f:convertDateTime type="both"/>
-								</h:outputText>
-							</h:link>
-							<f:facet name="footer">
-								<h:inputText id="ideaBeanAddCreatedAt" value="#{ideaBean.add.createdAt}">
-									<f:convertDateTime type="both"/>
-								</h:inputText>
-								<h:message for="ideaBeanAddCreatedAt" styleClass="error"/>
-							</f:facet>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="State Type"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemStateType" value="#{_item.stateType}"/>
-							</h:link>
-							<f:facet name="footer">
-								<h:inputText id="ideaBeanAddStateType" value="#{ideaBean.add.stateType}"/>
-								<h:message for="ideaBeanAddStateType" styleClass="error"/>
-							</f:facet>
-						</h:column>
-						<h:column footerClass="remove-column" headerClass="remove-column">
-							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-							<f:facet name="footer">
-								<h:commandLink action="#{_collection.add(ideaBean.added)}" id="personBeanPersonIdeasAdd" styleClass="add-button">
-									<f:setPropertyActionListener target="#{ideaBean.add.person}" value="#{personBean.person}"/>
-								</h:commandLink>
-							</f:facet>
-						</h:column>
-					</h:dataTable>
-				</h:panelGroup>
-				<h:outputText/>
-			</h:panelGrid>
+    <ui:define name="main">
+        <h:form id="create" styleClass="well form-horizontal">
+            <fieldset>
+                <legend>
+                    <c:choose>
+                        <c:when test="#{!empty personBean.id}">
+                            Edit &ldquo;#{personBean.person.companyName}&rdquo;
+                        </c:when>
+                        <c:otherwise>
+                            Add New
+                        </c:otherwise>
+                    </c:choose>
+                </legend>
 
-			<div class="buttons">
-				<h:commandLink value="Save" action="#{personBean.update}" styleClass="btn btn-primary"/>
-				<c:choose>
-					<c:when test="#{!empty personBean.id}">
-						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
-							<f:param name="id" value="#{personBean.id}"/>
-						</h:link>
-						<h:commandLink value="Delete" action="#{personBean.delete}" styleClass="btn btn-primary"/>
-					</c:when>
-					<c:otherwise>
-						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</h:form>
-	</ui:define>
+                <h:messages globalOnly="true" styleClass="error"/>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonCompanyName" value="Company" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputText id="personBeanPersonCompanyName" value="#{personBean.person.companyName}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="personBeanPersonCompanyName" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonContactName" value="Contact" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputText id="personBeanPersonContactName" value="#{personBean.person.contactName}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="personBeanPersonContactName" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonEmail" value="Email" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputText id="personBeanPersonEmail" value="#{personBean.person.email}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="personBeanPersonEmail" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonPassword" value="Password" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputSecret id="personBeanPersonPassword" value="#{personBean.person.password}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="personBeanPersonPassword" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonProfile" value="Profile" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputTextarea id="personBeanPersonProfile" value="#{personBean.person.profile}" styleClass="input-xlarge" rows="9"/>
+                        <span class="help-inline"><h:message for="personBeanPersonProfile" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="personBeanPersonIdeas" value="Ideas" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:panelGroup>
+                            <ui:param name="_collection" value="#{personBean.person.ideas}"/>
+                            <h:dataTable id="personBeanPersonIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Title"/>
+                                    </f:facet>
+                                    <h:link outcome="/idea/view">
+                                        <f:param name="id" value="#{_item.id}"/>
+                                        <h:outputText id="itemTitle" value="#{_item.title}"/>
+                                    </h:link>
+                                    <f:facet name="footer">
+                                        <h:inputText id="ideaBeanAddTitle" value="#{ideaBean.add.title}"/>
+                                        <h:message for="ideaBeanAddTitle" styleClass="error"/>
+                                    </f:facet>
+                                </h:column>
+                                <h:column footerClass="remove-column" headerClass="remove-column">
+                                    <h:commandLink value="Remove" action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+                                    <f:facet name="footer">
+                                        <h:commandLink value="Add" action="#{_collection.add(ideaBean.added)}" id="personBeanPersonIdeasAdd" styleClass="add-button">
+                                            <f:setPropertyActionListener target="#{ideaBean.add.person}" value="#{personBean.person}"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <h:commandButton value="Save" action="#{personBean.update}" styleClass="btn btn-primary"/>
+                    &nbsp;
+                    <c:choose>
+                        <c:when test="#{!empty personBean.id}">
+                            <h:button value="Cancel" outcome="view" styleClass="btn">
+                                <f:param name="id" value="#{personBean.id}"/>
+                            </h:button>
+                        </c:when>
+                        <c:otherwise>
+                            <h:button value="Cancel" outcome="search" styleClass="btn"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </fieldset>
+        </h:form>
+    </ui:define>
 
 </ui:composition>
