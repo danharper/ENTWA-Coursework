@@ -35,15 +35,6 @@
         <h:dataTable id="personBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{personBean.pageItems}" var="_item">
             <h:column>
                 <f:facet name="header">
-                    <h:outputText value="Email"/>
-                </f:facet>
-                <h:link outcome="/person/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemEmail" value="#{_item.email}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
                     <h:outputText value="Company"/>
                 </f:facet>
                 <h:link outcome="/person/view">
@@ -58,6 +49,15 @@
                 <h:link outcome="/person/view">
                     <f:param name="id" value="#{_item.id}"/>
                     <h:outputText id="itemContactName" value="#{_item.contactName}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="# of Ideas"/>
+                </f:facet>
+                <h:link outcome="/person/view">
+                    <f:param name="id" value="#{_item.id}"/>
+                    <h:outputText id="itemIdeas" value="#{_item.ideas.size()}"/>
                 </h:link>
             </h:column>
         </h:dataTable>

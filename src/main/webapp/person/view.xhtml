@@ -1,95 +1,97 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:forgeview="http://jboss.org/forge/view"
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:forgeview="http://jboss.org/forge/view"
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="id" value="#{personBean.id}"/>
-		<f:event type="preRenderView" listener="#{personBean.retrieve}"/>
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="id" value="#{personBean.id}"/>
+        <f:event type="preRenderView" listener="#{personBean.retrieve}"/>
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="View Person"/>
+    <ui:param name="pageTitle" value="View Person"/>
 
-	<ui:define name="header">
-		Person
-	</ui:define>
+    <ui:define name="header">Company</ui:define>
 
-	<ui:define name="subheader">
-		View existing Person
-	</ui:define>
+    <ui:define name="breadcrumb">
+        <li><h:link value="Companies" outcome="/person/search"/>  <span class="divider">/</span></li>
+        <li class="active">#{personBean.person.companyName}</li>
+    </ui:define>
 
-	<ui:define name="footer"/>
+    <ui:define name="action">
+        <h:link value="Modify Details" outcome="create" includeViewParams="true" styleClass="btn btn-primary pull-right"/>
+    </ui:define>
 
-	<ui:define name="main">
-		<h:panelGrid columnClasses="label,component,required" columns="3">
-			<h:outputLabel for="personBeanPersonEmail" value="Email:"/>
-			<h:outputText id="personBeanPersonEmail" value="#{personBean.person.email}"/>
-			<h:outputText/>
-			<h:outputLabel for="personBeanPersonPassword" value="Password:"/>
-			<h:outputText id="personBeanPersonPassword" value="#{personBean.person.password}"/>
-			<h:outputText/>
-			<h:outputLabel for="personBeanPersonContactName" value="Contact Name:"/>
-			<h:outputText id="personBeanPersonContactName" value="#{personBean.person.contactName}"/>
-			<h:outputText/>
-			<h:outputLabel for="personBeanPersonCompanyName" value="Company Name:"/>
-			<h:outputText id="personBeanPersonCompanyName" value="#{personBean.person.companyName}"/>
-			<h:outputText/>
-			<h:outputLabel for="personBeanPersonProfile" value="Profile:"/>
-			<h:outputText id="personBeanPersonProfile" value="#{personBean.person.profile}"/>
-			<h:outputText/>
-			<h:outputLabel for="personBeanPersonIdeas" value="Ideas:"/>
-			<h:dataTable id="personBeanPersonIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(personBean.person.ideas)}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Title"/>
-					</f:facet>
-					<h:link outcome="/idea/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemTitle" value="#{_item.title}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Details"/>
-					</f:facet>
-					<h:link outcome="/idea/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemDetails" value="#{_item.details}"/>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Created At"/>
-					</f:facet>
-					<h:link outcome="/idea/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
-							<f:convertDateTime type="both"/>
-						</h:outputText>
-					</h:link>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="State Type"/>
-					</f:facet>
-					<h:link outcome="/idea/view">
-						<f:param name="id" value="#{_item.id}"/>
-						<h:outputText id="itemStateType" value="#{_item.stateType}"/>
-					</h:link>
-				</h:column>
-			</h:dataTable>
-			<h:outputText/>
-		</h:panelGrid>
+    <ui:define name="footer"/>
 
-		<div class="buttons">
-			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
-			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
-			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
-		</div>
-	</ui:define>
+    <ui:define name="main">
+        <dl>
+            <dt>Company</dt>
+            <dd>
+                #{personBean.person.companyName}
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Contact</dt>
+            <dd>
+                #{personBean.person.contactName}
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+            <dd>
+                <a href="mailto:#{personBean.person.email}">#{personBean.person.email}</a>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Profile</dt>
+            <dd>
+                #{personBean.person.profile}
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Ideas</dt>
+            <dd>
+                <h:dataTable id="personBeanPersonIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(personBean.person.ideas)}" var="_item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Title"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemTitle" value="#{_item.title}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="State"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemStateType" value="#{_item.state}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Created At"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
+                                <f:convertDateTime type="both"/>
+                            </h:outputText>
+                        </h:link>
+                    </h:column>
+                </h:dataTable>
+            </dd>
+        </dl>
+    </ui:define>
 
 </ui:composition>

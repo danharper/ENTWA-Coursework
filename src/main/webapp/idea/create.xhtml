@@ -19,17 +19,6 @@
         Idea
     </ui:define>
 
-    <ui:define name="subheader">
-        <c:choose>
-            <c:when test="#{!empty ideaBean.id}">
-                Edit existing Idea
-            </c:when>
-            <c:otherwise>
-                Create a new Idea
-            </c:otherwise>
-        </c:choose>
-    </ui:define>
-
     <ui:define name="breadcrumb">
         <li><h:link value="Ideas" outcome="/idea/search"/>  <span class="divider">/</span></li>
         <li class="active">
@@ -145,8 +134,6 @@
                             <h:button value="Cancel" outcome="view" styleClass="btn">
                                 <f:param name="id" value="#{ideaBean.id}"/>
                             </h:button>
-                            &nbsp;
-                            <h:commandButton value="Delete" action="#{ideaBean.delete}" styleClass="btn btn-small btn-danger"/>
                         </c:when>
                         <c:otherwise>
                             <h:button value="Cancel" outcome="search" styleClass="btn"/>

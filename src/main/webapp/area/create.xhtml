@@ -1,129 +1,132 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:forgeview="http://jboss.org/forge/view"	
-	template="/resources/scaffold/pageTemplate.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:forgeview="http://jboss.org/forge/view"	
+                template="/resources/scaffold/pageTemplate.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="id" value="#{areaBean.id}"/>
-		<f:event type="preRenderView" listener="#{areaBean.retrieve}"/>
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="id" value="#{areaBean.id}"/>
+        <f:event type="preRenderView" listener="#{areaBean.retrieve}"/>
+    </f:metadata>
 
-	<ui:param name="pageTitle" value="Create Area"/>
+    <ui:param name="pageTitle" value="Create Area"/>
 
-	<ui:define name="header">
-		Area
-	</ui:define>
+    <ui:define name="header">
+        Area
+    </ui:define>
 
-	<ui:define name="subheader">
-		<c:choose>
-			<c:when test="#{!empty areaBean.id}">
-				Edit existing Area
-			</c:when>
-			<c:otherwise>
-				Create a new Area
-			</c:otherwise>
-		</c:choose>
-	</ui:define>
+    <ui:define name="breadcrumb">
+        <li><h:link value="Areas" outcome="/area/search"/>  <span class="divider">/</span></li>
+        <li class="active">
+            <c:choose>
+                <c:when test="#{!empty areaBean.id}">
+                    Edit Area
+                </c:when>
+                <c:otherwise>
+                    Add New
+                </c:otherwise>
+            </c:choose>
+        </li>
+    </ui:define>
 
-	<ui:define name="footer"/>
+    <ui:define name="action">
+        <h:commandButton value="Delete Area" action="#{areaBean.delete}" styleClass="btn btn-danger pull-right"/>
+    </ui:define>
 
-	<ui:define name="main">
-		<h:form id="create">
-			<h:messages globalOnly="true" styleClass="error"/>
+    <ui:define name="footer"/>
 
-			<h:panelGrid columnClasses="label,component,required" columns="3">
-				<h:outputLabel for="areaBeanAreaTitle" value="Title:"/>
-				<h:panelGroup>
-					<h:inputText id="areaBeanAreaTitle" value="#{areaBean.area.title}"/>
-					<h:message for="areaBeanAreaTitle" styleClass="error"/>
-				</h:panelGroup>
-				<h:outputText/>
-				<h:outputLabel for="areaBeanAreaIdeas" value="Ideas:"/>
-				<h:panelGroup>
-					<ui:param name="_collection" value="#{areaBean.area.ideas}"/>
-					<h:dataTable id="areaBeanAreaIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Title"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemTitle" value="#{_item.title}"/>
-							</h:link>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Details"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemDetails" value="#{_item.details}"/>
-							</h:link>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Created At"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
-									<f:convertDateTime type="both"/>
-								</h:outputText>
-							</h:link>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Person"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemPerson" value="#{_item.person}"/>
-							</h:link>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="State Type"/>
-							</f:facet>
-							<h:link outcome="/idea/view">
-								<f:param name="id" value="#{_item.id}"/>
-								<h:outputText id="itemStateType" value="#{_item.stateType}"/>
-							</h:link>
-						</h:column>
-						<h:column footerClass="remove-column" headerClass="remove-column">
-							<h:commandLink action="#{_collection.remove(_item)}" styleClass="remove-button"/>
-						</h:column>
-					</h:dataTable>
-					<h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
-						<h:selectOneMenu converter="#{ideaBean.converter}" id="areaBeanAreaIdeasSelect" value="#{requestScope['areaBeanAreaIdeasSelect']}">
-							<f:selectItem/>
-							<f:selectItems value="#{ideaBean.all}"/>
-						</h:selectOneMenu>
-						<h:commandLink action="#{_collection.add(requestScope['areaBeanAreaIdeasSelect'])}" id="areaBeanAreaIdeasAdd" onclick="if (document.getElementById(document.forms[0].id+':areaBeanAreaIdeasSelect').selectedIndex &lt; 1) { alert('Must select a Idea'); return false; }" styleClass="add-button"/>
-					</h:panelGrid>
-				</h:panelGroup>
-				<h:outputText/>
-			</h:panelGrid>
+    <ui:define name="main">
+        <h:form id="creadte" styleClass="well form-horizontal">
+            <fieldset>
+                <legend>
+                    <c:choose>
+                        <c:when test="#{!empty areaBean.id}">
+                            Edit &ldquo;#{areaBean.area.title}&rdquo;
+                        </c:when>
+                        <c:otherwise>
+                            Add New
+                        </c:otherwise>
+                    </c:choose>
+                </legend>
 
-			<div class="buttons">
-				<h:commandLink value="Save" action="#{areaBean.update}" styleClass="btn btn-primary"/>
-				<c:choose>
-					<c:when test="#{!empty areaBean.id}">
-						<h:link value="Cancel" outcome="view" styleClass="btn btn-primary">
-							<f:param name="id" value="#{areaBean.id}"/>
-						</h:link>
-						<h:commandLink value="Delete" action="#{areaBean.delete}" styleClass="btn btn-primary"/>
-					</c:when>
-					<c:otherwise>
-						<h:link value="Cancel" outcome="search" styleClass="btn btn-primary"/>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</h:form>
-	</ui:define>
+                <h:messages globalOnly="true" styleClass="error"/>
+
+                <div class="control-group">
+                    <h:outputLabel for="areaBeanAreaTitle" value="Title" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:inputText id="areaBeanAreaTitle" value="#{areaBean.area.title}" styleClass="input-xlarge"/>
+                        <span class="help-inline"><h:message for="areaBeanAreaTitle" styleClass="error"/></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h:outputLabel for="areaBeanAreaIdeas" value="Ideas" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:panelGroup>
+                            <ui:param name="_collection" value="#{areaBean.area.ideas}"/>
+                            <h:dataTable id="areaBeanAreaIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(_collection)}" var="_item">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Title"/>
+                                    </f:facet>
+                                    <h:link outcome="/idea/view">
+                                        <f:param name="id" value="#{_item.id}"/>
+                                        <h:outputText id="itemTitle" value="#{_item.title}"/>
+                                    </h:link>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Company"/>
+                                    </f:facet>
+                                    <h:link outcome="/idea/view">
+                                        <f:param name="id" value="#{_item.id}"/>
+                                        <h:outputText id="itemPerson" value="#{_item.person.companyName}"/>
+                                    </h:link>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="State"/>
+                                    </f:facet>
+                                    <h:link outcome="/idea/view">
+                                        <f:param name="id" value="#{_item.id}"/>
+                                        <h:outputText id="itemStateType" value="#{_item.state}"/>
+                                    </h:link>
+                                </h:column>
+                                <h:column footerClass="remove-column" headerClass="remove-column">
+                                    <h:commandLink value="Remove" action="#{_collection.remove(_item)}" styleClass="remove-button"/>
+                                </h:column>
+                            </h:dataTable>
+                            <h:panelGrid columnClasses=",remove-column" columns="2" styleClass="data-table-footer">
+                                <h:selectOneMenu converter="#{ideaBean.converter}" id="areaBeanAreaIdeasSelect" value="#{requestScope['areaBeanAreaIdeasSelect']}">
+                                    <f:selectItem/>
+                                    <f:selectItems value="#{ideaBean.all}"/>
+                                </h:selectOneMenu>
+                                <h:commandLink value="Add" action="#{_collection.add(requestScope['areaBeanAreaIdeasSelect'])}" id="areaBeanAreaIdeasAdd" onclick="if (document.getElementById(document.forms[0].id+':areaBeanAreaIdeasSelect').selectedIndex &lt; 1) { alert('Must select a Idea'); return false; }" styleClass="add-button"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <h:commandButton value="Save" action="#{areaBean.update}" styleClass="btn btn-primary"/>
+                    &nbsp;
+                    <c:choose>
+                        <c:when test="#{!empty areaBean.id}">
+                            <h:button value="Cancel" outcome="view" styleClass="btn">
+                                <f:param name="id" value="#{areaBean.id}"/>
+                            </h:button>
+                        </c:when>
+                        <c:otherwise>
+                            <h:button value="Cancel" outcome="search" styleClass="btn"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </fieldset>
+        </h:form>
+    </ui:define>
 
 </ui:composition>

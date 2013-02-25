@@ -36,48 +36,48 @@
                 </h:link>
             </dd>
         </dl>
-        
+
         <dl>
             <dt>Ideas</dt>
             <dd>
                 <h:dataTable id="areaBeanAreaIdeas" styleClass="data-table table table-striped table-bordered" value="#{forgeview:asList(areaBean.area.ideas)}" var="_item">
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Title"/>
-                    </f:facet>
-                    <h:link outcome="/idea/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemTitle" value="#{_item.title}"/>
-                    </h:link>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Company"/>
-                    </f:facet>
-                    <h:link outcome="/idea/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemPerson" value="#{_item.person.companyName}"/>
-                    </h:link>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Contact"/>
-                    </f:facet>
-                    <h:link outcome="/idea/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemPerson" value="#{_item.person.contactName}"/>
-                    </h:link>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="State Type"/>
-                    </f:facet>
-                    <h:link outcome="/idea/view">
-                        <f:param name="id" value="#{_item.id}"/>
-                        <h:outputText id="itemStateType" value="#{_item.state}"/>
-                    </h:link>
-                </h:column>
-            </h:dataTable>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Title"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemTitle" value="#{_item.title}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Company"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemPerson" value="#{_item.person.companyName}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Contact"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemPerson" value="#{_item.person.contactName}"/>
+                        </h:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="State"/>
+                        </f:facet>
+                        <h:link outcome="/idea/view">
+                            <f:param name="id" value="#{_item.id}"/>
+                            <h:outputText id="itemStateType" value="#{_item.state}"/>
+                        </h:link>
+                    </h:column>
+                </h:dataTable>
             </dd>
         </dl>
     </ui:define>
