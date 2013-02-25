@@ -12,7 +12,9 @@
 			<f:param name="page" value="#{paginatorBean.page - 1}"/>
 			&lt; Previous 
 		</h:commandLink>
+                &nbsp;
 		<h:outputText styleClass="paginator-content" value="#{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} (of #{paginatorBean.count})"/>
+                &nbsp;
 		<h:commandLink styleClass="btn btn-primary" rendered="#{(paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count}">
 			<f:param name="page" value="#{paginatorBean.page + 1}"/>
 			Next &gt;

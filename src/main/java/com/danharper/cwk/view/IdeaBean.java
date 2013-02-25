@@ -177,7 +177,7 @@ public class IdeaBean implements Serializable
 
    public int getPageSize()
    {
-      return 10;
+      return 2;
    }
 
    public Idea getExample()

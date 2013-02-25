@@ -108,9 +108,12 @@
                 </h:link>
             </h:column>
         </h:dataTable>
-        <ui:include src="/resources/scaffold/paginator.xhtml">
-            <ui:param name="paginatorBean" value="#{ideaBean}"/>
-        </ui:include>
+        
+        <h:form id="paginate" styleClass="well form-search">
+            <ui:include src="/resources/scaffold/paginator.xhtml">
+                <ui:param name="paginatorBean" value="#{ideaBean}"/>
+            </ui:include>
+        </h:form>
 
     </ui:define>
 
