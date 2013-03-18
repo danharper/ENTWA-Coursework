@@ -16,9 +16,9 @@ public abstract class AbstractBean<T> implements Serializable
 	private static final long serialVersionUID = 1L;
 	private Class<T> entity;
 
-	protected AbstractBean(Class<T> entity)
+	protected AbstractBean(Class<T> entityClass)
 	{
-		this.entity = entity;
+		this.entity = entityClass;
 	}
 
 	@Inject

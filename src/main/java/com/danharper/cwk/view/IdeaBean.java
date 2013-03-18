@@ -54,8 +54,7 @@ public class IdeaBean implements Serializable
     {
         return this.idea;
     }
-    
-    
+
     public Idea getExample()
     {
         return this.example;

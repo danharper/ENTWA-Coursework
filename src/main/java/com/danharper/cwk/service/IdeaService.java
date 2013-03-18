@@ -5,7 +5,6 @@ import com.danharper.cwk.facade.IdeaFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 
 /**
  *
@@ -51,10 +50,5 @@ public class IdeaService {
     {
         return ideas.findRange(currentPage, pageSize);
     }
-    
-//    public EntityManager getEntityManager()
-//    {
-//        return ideas.getEntityManager();
-//    }
     
 }
