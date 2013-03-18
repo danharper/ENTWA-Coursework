@@ -19,312 +19,225 @@ import com.danharper.cwk.domain.Idea;
 import com.danharper.cwk.service.IdeaService;
 import javax.ejb.EJB;
 
-/**
- * Backing bean for Idea entities.
- * <p>
- * This class provides CRUD functionality for all Idea entities. It focuses
- * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
- * state management, <tt>PersistenceContext</tt> for persistence,
- * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
- * custom base class.
- */
-
 @Named
 @Stateful
 @ConversationScoped
 public class IdeaBean implements Serializable
 {
-    
+
     public IdeaBean()
     {
-        
     }
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Inject
+    private Conversation conversation;
+    @EJB
+    private IdeaService ideaService;
+    @Resource
+    private SessionContext sessionContext;
+    private Long id;
+    private Idea idea;
+    private Idea example = new Idea();
 
-   /*
-    * Support creating and retrieving Idea entities
-    */
+    public Long getId()
+    {
+        return this.id;
+    }
 
-   private Long id;
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
-   public Long getId()
-   {
-      return this.id;
-   }
+    public Idea getIdea()
+    {
+        return this.idea;
+    }
+    
+    
+    public Idea getExample()
+    {
+        return this.example;
+    }
 
-   public void setId(Long id)
-   {
-      this.id = id;
-   }
+    public void setExample(Idea example)
+    {
+        this.example = example;
+    }
 
-   private Idea idea;
+    public String create()
+    {
 
-   public Idea getIdea()
-   {
-      return this.idea;
-   }
+        this.conversation.begin();
+        return "create?faces-redirect=true";
+    }
 
-   @Inject
-   private Conversation conversation;
+    public void retrieve()
+    {
 
-   //@PersistenceContext(type = PersistenceContextType.EXTENDED)
-   //private EntityManager entityManager;
-   
-   @EJB
-   private IdeaService ideaService;
+        if (FacesContext.getCurrentInstance().isPostback())
+        {
+            return;
+        }
 
-   public String create()
-   {
+        if (this.conversation.isTransient())
+        {
+            this.conversation.begin();
+        }
 
-      this.conversation.begin();
-      return "create?faces-redirect=true";
-   }
+        if (this.id == null)
+        {
+            this.idea = this.example;
+        }
+        else
+        {
+            this.idea = findById(getId());
+        }
+    }
 
-   public void retrieve()
-   {
+    public Idea findById(Long id)
+    {
+        return this.ideaService.find(id);
+    }
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+    public String update()
+    {
+        this.conversation.end();
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
-
-      if (this.id == null)
-      {
-         this.idea = this.example;
-      }
-      else
-      {
-         this.idea = findById(getId());
-      }
-   }
-
-   public Idea findById(Long id)
-   {
-
-      return this.ideaService.find(id);
-   }
-
-   /*
-    * Support updating and deleting Idea entities
-    */
-
-   public String update()
-   {
-      this.conversation.end();
-
-      try
-      {
-         if (this.id == null)
-         {
-            this.ideaService.create(this.idea);
-            return "search?faces-redirect=true";
-         }
-         else
-         {
-            this.ideaService.update(this.idea);
-            return "view?faces-redirect=true&id=" + this.idea.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
-
-   public String delete()
-   {
-      this.conversation.end();
-
-      try
-      {
-         this.ideaService.remove(findById(getId()));
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
-
-   /*
-    * Support searching Idea entities with pagination
-    */
-
-   private int page;
-   private long count;
-   private List<Idea> pageItems;
-
-   private Idea example = new Idea();
-
-   public int getPage()
-   {
-      return this.page;
-   }
-
-   public void setPage(int page)
-   {
-      this.page = page;
-   }
-
-   public int getPageSize()
-   {
-      return 2;
-   }
-
-   public Idea getExample()
-   {
-      return this.example;
-   }
-
-   public void setExample(Idea example)
-   {
-      this.example = example;
-   }
-
-   public void search()
-   {
-      this.page = 0;
-   }
-
-   public void paginate()
-   {
-       this.count = ideaService.count();
-       this.pageItems = ideaService.findRange(this.page, getPageSize());
-
-//      CriteriaBuilder builder = ideaService.getEntityManager().getCriteriaBuilder();
-//
-//      // Populate this.count
-//
-//      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-//      Root<Idea> root = countCriteria.from(Idea.class);
-//      countCriteria = countCriteria.select(builder.count(root)).where(
-//            getSearchPredicates(root));
-//      this.count = ideaService.getEntityManager().createQuery(countCriteria)
-//            .getSingleResult();
-//
-//      // Populate this.pageItems
-//
-//      CriteriaQuery<Idea> criteria = builder.createQuery(Idea.class);
-//      root = criteria.from(Idea.class);
-//      TypedQuery<Idea> query = ideaService.getEntityManager().createQuery(criteria
-//            .select(root).where(getSearchPredicates(root)));
-//      query.setFirstResult(this.page * getPageSize()).setMaxResults(
-//            getPageSize());
-//      this.pageItems = query.getResultList();
-   }
-
-//   private Predicate[] getSearchPredicates(Root<Idea> root)
-//   {
-//
-//      CriteriaBuilder builder = ideaService.getEntityManager().getCriteriaBuilder();
-//      List<Predicate> predicatesList = new ArrayList<Predicate>();
-//
-//      String title = this.example.getTitle();
-//      if (title != null && !"".equals(title))
-//      {
-//         predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
-//      }
-//      String details = this.example.getDetails();
-//      if (details != null && !"".equals(details))
-//      {
-//         predicatesList.add(builder.like(root.<String> get("details"), '%' + details + '%'));
-//      }
-//      Person person = this.example.getPerson();
-//      if (person != null)
-//      {
-//         predicatesList.add(builder.equal(root.get("person"), person));
-//      }
-//      int stateType = this.example.getStateType();
-//      if (stateType != 0)
-//      {
-//         predicatesList.add(builder.equal(root.get("stateType"), stateType));
-//      }
-//
-//      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-//   }
-
-   public List<Idea> getPageItems()
-   {
-      return this.pageItems;
-   }
-
-   public long getCount()
-   {
-      return this.count;
-   }
-
-   /*
-    * Support listing and POSTing back Idea entities (e.g. from inside an
-    * HtmlSelectOneMenu)
-    */
-
-   public List<Idea> getAll()
-   {
-
-//      CriteriaQuery<Idea> criteria = this.entityManager
-//            .getCriteriaBuilder().createQuery(Idea.class);
-//      return this.entityManager.createQuery(
-//            criteria.select(criteria.from(Idea.class))).getResultList();
-       return ideaService.findAll();
-   }
-
-   @Resource
-   private SessionContext sessionContext;
-
-   public Converter getConverter()
-   {
-
-      final IdeaBean ejbProxy = this.sessionContext.getBusinessObject(IdeaBean.class);
-
-      return new Converter()
-      {
-
-         @Override
-         public Object getAsObject(FacesContext context,
-               UIComponent component, String value)
-         {
-
-            return ejbProxy.findById(Long.valueOf(value));
-         }
-
-         @Override
-         public String getAsString(FacesContext context,
-               UIComponent component, Object value)
-         {
-
-            if (value == null)
+        try
+        {
+            if (this.id == null)
             {
-               return "";
+                this.ideaService.create(this.idea);
+                return "search?faces-redirect=true";
+            }
+            else
+            {
+                this.ideaService.update(this.idea);
+                return "view?faces-redirect=true&id=" + this.idea.getId();
+            }
+        }
+        catch (Exception e)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    public String delete()
+    {
+        this.conversation.end();
+
+        try
+        {
+            this.ideaService.remove(findById(getId()));
+            return "search?faces-redirect=true";
+        }
+        catch (Exception e)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+    /*
+     * Support searching Idea entities with pagination
+     */
+    private int page;
+    private long count;
+    private List<Idea> pageItems;
+
+    public int getPage()
+    {
+        return this.page;
+    }
+
+    public void setPage(int page)
+    {
+        this.page = page;
+    }
+
+    public int getPageSize()
+    {
+        return 2;
+    }
+
+    public void search()
+    {
+        this.page = 0;
+    }
+
+    public void paginate()
+    {
+        this.count = ideaService.count();
+        this.pageItems = ideaService.findRange(this.page, getPageSize());
+    }
+
+    public List<Idea> getPageItems()
+    {
+        return this.pageItems;
+    }
+
+    public long getCount()
+    {
+        return this.count;
+    }
+
+    /*
+     * For correctly listing idea entities (e.g. HtmlSelectOneMenu)
+     */
+    public List<Idea> getAll()
+    {
+        return ideaService.findAll();
+    }
+
+    public Converter getConverter()
+    {
+
+        final IdeaBean ejbProxy = this.sessionContext.getBusinessObject(IdeaBean.class);
+
+        return new Converter()
+        {
+            @Override
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+            {
+
+                return ejbProxy.findById(Long.valueOf(value));
             }
 
-            return String.valueOf(((Idea) value).getId());
-         }
-      };
-   }
+            @Override
+            public String getAsString(FacesContext context,
+                    UIComponent component, Object value)
+            {
 
-   /*
-    * Support adding children to bidirectional, one-to-many tables
-    */
+                if (value == null)
+                {
+                    return "";
+                }
 
-   private Idea add = new Idea();
+                return String.valueOf(((Idea) value).getId());
+            }
 
-   public Idea getAdd()
-   {
-      return this.add;
-   }
+        };
+    }
 
-   public Idea getAdded()
-   {
-      Idea added = this.add;
-      this.add = new Idea();
-      return added;
-   }
+    /*
+     * Bi-directional, one-to-many tables
+     */
+    private Idea add = new Idea();
+
+    public Idea getAdd()
+    {
+        return this.add;
+    }
+
+    public Idea getAdded()
+    {
+        Idea added = this.add;
+        this.add = new Idea();
+        return added;
+    }
+
 }
