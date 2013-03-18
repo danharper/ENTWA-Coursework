@@ -1,4 +1,4 @@
-package com.danharper.cwk.view;
+package com.danharper.cwk.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,13 +24,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.danharper.cwk.domain.Idea;
-import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.domain.Area;
 
 /**
- * Backing bean for Idea entities.
+ * Backing bean for Area entities.
  * <p>
- * This class provides CRUD functionality for all Idea entities. It focuses
+ * This class provides CRUD functionality for all Area entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -40,13 +39,13 @@ import com.danharper.cwk.domain.Person;
 @Named
 @Stateful
 @ConversationScoped
-public class IdeaBean implements Serializable
+public class AreaBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Idea entities
+    * Support creating and retrieving Area entities
     */
 
    private Long id;
@@ -61,11 +60,11 @@ public class IdeaBean implements Serializable
       this.id = id;
    }
 
-   private Idea idea;
+   private Area area;
 
-   public Idea getIdea()
+   public Area getArea()
    {
-      return this.idea;
+      return this.area;
    }
 
    @Inject
@@ -96,22 +95,22 @@ public class IdeaBean implements Serializable
 
       if (this.id == null)
       {
-         this.idea = this.example;
+         this.area = this.example;
       }
       else
       {
-         this.idea = findById(getId());
+         this.area = findById(getId());
       }
    }
 
-   public Idea findById(Long id)
+   public Area findById(Long id)
    {
 
-      return this.entityManager.find(Idea.class, id);
+      return this.entityManager.find(Area.class, id);
    }
 
    /*
-    * Support updating and deleting Idea entities
+    * Support updating and deleting Area entities
     */
 
    public String update()
@@ -122,13 +121,13 @@ public class IdeaBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.idea);
+            this.entityManager.persist(this.area);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.idea);
-            return "view?faces-redirect=true&id=" + this.idea.getId();
+            this.entityManager.merge(this.area);
+            return "view?faces-redirect=true&id=" + this.area.getId();
          }
       }
       catch (Exception e)
@@ -156,14 +155,14 @@ public class IdeaBean implements Serializable
    }
 
    /*
-    * Support searching Idea entities with pagination
+    * Support searching Area entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Idea> pageItems;
+   private List<Area> pageItems;
 
-   private Idea example = new Idea();
+   private Area example = new Area();
 
    public int getPage()
    {
@@ -177,15 +176,15 @@ public class IdeaBean implements Serializable
 
    public int getPageSize()
    {
-      return 2;
+      return 10;
    }
 
-   public Idea getExample()
+   public Area getExample()
    {
       return this.example;
    }
 
-   public void setExample(Idea example)
+   public void setExample(Area example)
    {
       this.example = example;
    }
@@ -203,7 +202,7 @@ public class IdeaBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Idea> root = countCriteria.from(Idea.class);
+      Root<Area> root = countCriteria.from(Area.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -211,16 +210,16 @@ public class IdeaBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Idea> criteria = builder.createQuery(Idea.class);
-      root = criteria.from(Idea.class);
-      TypedQuery<Idea> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Area> criteria = builder.createQuery(Area.class);
+      root = criteria.from(Area.class);
+      TypedQuery<Area> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Idea> root)
+   private Predicate[] getSearchPredicates(Root<Area> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
@@ -231,26 +230,11 @@ public class IdeaBean implements Serializable
       {
          predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
       }
-      String details = this.example.getDetails();
-      if (details != null && !"".equals(details))
-      {
-         predicatesList.add(builder.like(root.<String> get("details"), '%' + details + '%'));
-      }
-      Person person = this.example.getPerson();
-      if (person != null)
-      {
-         predicatesList.add(builder.equal(root.get("person"), person));
-      }
-      int stateType = this.example.getStateType();
-      if (stateType != 0)
-      {
-         predicatesList.add(builder.equal(root.get("stateType"), stateType));
-      }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Idea> getPageItems()
+   public List<Area> getPageItems()
    {
       return this.pageItems;
    }
@@ -261,17 +245,17 @@ public class IdeaBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Idea entities (e.g. from inside an
+    * Support listing and POSTing back Area entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Idea> getAll()
+   public List<Area> getAll()
    {
 
-      CriteriaQuery<Idea> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Idea.class);
+      CriteriaQuery<Area> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Area.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Idea.class))).getResultList();
+            criteria.select(criteria.from(Area.class))).getResultList();
    }
 
    @Resource
@@ -280,7 +264,7 @@ public class IdeaBean implements Serializable
    public Converter getConverter()
    {
 
-      final IdeaBean ejbProxy = this.sessionContext.getBusinessObject(IdeaBean.class);
+      final AreaBean ejbProxy = this.sessionContext.getBusinessObject(AreaBean.class);
 
       return new Converter()
       {
@@ -303,7 +287,7 @@ public class IdeaBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Idea) value).getId());
+            return String.valueOf(((Area) value).getId());
          }
       };
    }
@@ -312,17 +296,17 @@ public class IdeaBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Idea add = new Idea();
+   private Area add = new Area();
 
-   public Idea getAdd()
+   public Area getAdd()
    {
       return this.add;
    }
 
-   public Idea getAdded()
+   public Area getAdded()
    {
-      Idea added = this.add;
-      this.add = new Idea();
+      Area added = this.add;
+      this.add = new Area();
       return added;
    }
 }

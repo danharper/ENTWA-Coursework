@@ -1,4 +1,4 @@
-package com.danharper.cwk.view;
+package com.danharper.cwk.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.danharper.cwk.domain.Idea;
 import com.danharper.cwk.domain.Person;
-import javax.faces.bean.ManagedProperty;
 
 /**
- * Backing bean for Person entities.
+ * Backing bean for Idea entities.
  * <p>
- * This class provides CRUD functionality for all Person entities. It focuses
+ * This class provides CRUD functionality for all Idea entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -40,16 +40,15 @@ import javax.faces.bean.ManagedProperty;
 @Named
 @Stateful
 @ConversationScoped
-public class PersonBean implements Serializable
+public class IdeaBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Person entities
+    * Support creating and retrieving Idea entities
     */
 
-   @ManagedProperty(value="#{param.id}")
    private Long id;
 
    public Long getId()
@@ -62,11 +61,11 @@ public class PersonBean implements Serializable
       this.id = id;
    }
 
-   private Person person;
+   private Idea idea;
 
-   public Person getPerson()
+   public Idea getIdea()
    {
-      return this.person;
+      return this.idea;
    }
 
    @Inject
@@ -97,22 +96,22 @@ public class PersonBean implements Serializable
 
       if (this.id == null)
       {
-         this.person = this.example;
+         this.idea = this.example;
       }
       else
       {
-         this.person = findById(getId());
+         this.idea = findById(getId());
       }
    }
 
-   public Person findById(Long id)
+   public Idea findById(Long id)
    {
 
-      return this.entityManager.find(Person.class, id);
+      return this.entityManager.find(Idea.class, id);
    }
 
    /*
-    * Support updating and deleting Person entities
+    * Support updating and deleting Idea entities
     */
 
    public String update()
@@ -123,13 +122,13 @@ public class PersonBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.person);
+            this.entityManager.persist(this.idea);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.person);
-            return "view?faces-redirect=true&id=" + this.person.getId();
+            this.entityManager.merge(this.idea);
+            return "view?faces-redirect=true&id=" + this.idea.getId();
          }
       }
       catch (Exception e)
@@ -157,14 +156,14 @@ public class PersonBean implements Serializable
    }
 
    /*
-    * Support searching Person entities with pagination
+    * Support searching Idea entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Person> pageItems;
+   private List<Idea> pageItems;
 
-   private Person example = new Person();
+   private Idea example = new Idea();
 
    public int getPage()
    {
@@ -178,15 +177,15 @@ public class PersonBean implements Serializable
 
    public int getPageSize()
    {
-      return 10;
+      return 2;
    }
 
-   public Person getExample()
+   public Idea getExample()
    {
       return this.example;
    }
 
-   public void setExample(Person example)
+   public void setExample(Idea example)
    {
       this.example = example;
    }
@@ -204,7 +203,7 @@ public class PersonBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Person> root = countCriteria.from(Person.class);
+      Root<Idea> root = countCriteria.from(Idea.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -212,51 +211,46 @@ public class PersonBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
-      root = criteria.from(Person.class);
-      TypedQuery<Person> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Idea> criteria = builder.createQuery(Idea.class);
+      root = criteria.from(Idea.class);
+      TypedQuery<Idea> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Person> root)
+   private Predicate[] getSearchPredicates(Root<Idea> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      String email = this.example.getEmail();
-      if (email != null && !"".equals(email))
+      String title = this.example.getTitle();
+      if (title != null && !"".equals(title))
       {
-         predicatesList.add(builder.like(root.<String> get("email"), '%' + email + '%'));
+         predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
       }
-      String password = this.example.getPassword();
-      if (password != null && !"".equals(password))
+      String details = this.example.getDetails();
+      if (details != null && !"".equals(details))
       {
-         predicatesList.add(builder.like(root.<String> get("password"), '%' + password + '%'));
+         predicatesList.add(builder.like(root.<String> get("details"), '%' + details + '%'));
       }
-      String contactName = this.example.getContactName();
-      if (contactName != null && !"".equals(contactName))
+      Person person = this.example.getPerson();
+      if (person != null)
       {
-         predicatesList.add(builder.like(root.<String> get("contactName"), '%' + contactName + '%'));
+         predicatesList.add(builder.equal(root.get("person"), person));
       }
-      String companyName = this.example.getCompanyName();
-      if (companyName != null && !"".equals(companyName))
+      int stateType = this.example.getStateType();
+      if (stateType != 0)
       {
-         predicatesList.add(builder.like(root.<String> get("companyName"), '%' + companyName + '%'));
-      }
-      String profile = this.example.getProfile();
-      if (profile != null && !"".equals(profile))
-      {
-         predicatesList.add(builder.like(root.<String> get("profile"), '%' + profile + '%'));
+         predicatesList.add(builder.equal(root.get("stateType"), stateType));
       }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Person> getPageItems()
+   public List<Idea> getPageItems()
    {
       return this.pageItems;
    }
@@ -267,17 +261,17 @@ public class PersonBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Person entities (e.g. from inside an
+    * Support listing and POSTing back Idea entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Person> getAll()
+   public List<Idea> getAll()
    {
 
-      CriteriaQuery<Person> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Person.class);
+      CriteriaQuery<Idea> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Idea.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Person.class))).getResultList();
+            criteria.select(criteria.from(Idea.class))).getResultList();
    }
 
    @Resource
@@ -286,7 +280,7 @@ public class PersonBean implements Serializable
    public Converter getConverter()
    {
 
-      final PersonBean ejbProxy = this.sessionContext.getBusinessObject(PersonBean.class);
+      final IdeaBean ejbProxy = this.sessionContext.getBusinessObject(IdeaBean.class);
 
       return new Converter()
       {
@@ -309,7 +303,7 @@ public class PersonBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Person) value).getId());
+            return String.valueOf(((Idea) value).getId());
          }
       };
    }
@@ -318,17 +312,17 @@ public class PersonBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Person add = new Person();
+   private Idea add = new Idea();
 
-   public Person getAdd()
+   public Idea getAdd()
    {
       return this.add;
    }
 
-   public Person getAdded()
+   public Idea getAdded()
    {
-      Person added = this.add;
-      this.add = new Person();
+      Idea added = this.add;
+      this.add = new Idea();
       return added;
    }
 }

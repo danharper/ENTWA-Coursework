@@ -1,4 +1,4 @@
-package com.danharper.cwk.view;
+package com.danharper.cwk.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,12 +24,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.danharper.cwk.domain.Area;
+import com.danharper.cwk.domain.Person;
+import javax.faces.bean.ManagedProperty;
 
 /**
- * Backing bean for Area entities.
+ * Backing bean for Person entities.
  * <p>
- * This class provides CRUD functionality for all Area entities. It focuses
+ * This class provides CRUD functionality for all Person entities. It focuses
  * purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for
  * state management, <tt>PersistenceContext</tt> for persistence,
  * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or
@@ -39,15 +40,16 @@ import com.danharper.cwk.domain.Area;
 @Named
 @Stateful
 @ConversationScoped
-public class AreaBean implements Serializable
+public class PersonBean implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
 
    /*
-    * Support creating and retrieving Area entities
+    * Support creating and retrieving Person entities
     */
 
+   @ManagedProperty(value="#{param.id}")
    private Long id;
 
    public Long getId()
@@ -60,11 +62,11 @@ public class AreaBean implements Serializable
       this.id = id;
    }
 
-   private Area area;
+   private Person person;
 
-   public Area getArea()
+   public Person getPerson()
    {
-      return this.area;
+      return this.person;
    }
 
    @Inject
@@ -95,22 +97,22 @@ public class AreaBean implements Serializable
 
       if (this.id == null)
       {
-         this.area = this.example;
+         this.person = this.example;
       }
       else
       {
-         this.area = findById(getId());
+         this.person = findById(getId());
       }
    }
 
-   public Area findById(Long id)
+   public Person findById(Long id)
    {
 
-      return this.entityManager.find(Area.class, id);
+      return this.entityManager.find(Person.class, id);
    }
 
    /*
-    * Support updating and deleting Area entities
+    * Support updating and deleting Person entities
     */
 
    public String update()
@@ -121,13 +123,13 @@ public class AreaBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.area);
+            this.entityManager.persist(this.person);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.area);
-            return "view?faces-redirect=true&id=" + this.area.getId();
+            this.entityManager.merge(this.person);
+            return "view?faces-redirect=true&id=" + this.person.getId();
          }
       }
       catch (Exception e)
@@ -155,14 +157,14 @@ public class AreaBean implements Serializable
    }
 
    /*
-    * Support searching Area entities with pagination
+    * Support searching Person entities with pagination
     */
 
    private int page;
    private long count;
-   private List<Area> pageItems;
+   private List<Person> pageItems;
 
-   private Area example = new Area();
+   private Person example = new Person();
 
    public int getPage()
    {
@@ -179,12 +181,12 @@ public class AreaBean implements Serializable
       return 10;
    }
 
-   public Area getExample()
+   public Person getExample()
    {
       return this.example;
    }
 
-   public void setExample(Area example)
+   public void setExample(Person example)
    {
       this.example = example;
    }
@@ -202,7 +204,7 @@ public class AreaBean implements Serializable
       // Populate this.count
 
       CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Area> root = countCriteria.from(Area.class);
+      Root<Person> root = countCriteria.from(Person.class);
       countCriteria = countCriteria.select(builder.count(root)).where(
             getSearchPredicates(root));
       this.count = this.entityManager.createQuery(countCriteria)
@@ -210,31 +212,51 @@ public class AreaBean implements Serializable
 
       // Populate this.pageItems
 
-      CriteriaQuery<Area> criteria = builder.createQuery(Area.class);
-      root = criteria.from(Area.class);
-      TypedQuery<Area> query = this.entityManager.createQuery(criteria
+      CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
+      root = criteria.from(Person.class);
+      TypedQuery<Person> query = this.entityManager.createQuery(criteria
             .select(root).where(getSearchPredicates(root)));
       query.setFirstResult(this.page * getPageSize()).setMaxResults(
             getPageSize());
       this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Area> root)
+   private Predicate[] getSearchPredicates(Root<Person> root)
    {
 
       CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
       List<Predicate> predicatesList = new ArrayList<Predicate>();
 
-      String title = this.example.getTitle();
-      if (title != null && !"".equals(title))
+      String email = this.example.getEmail();
+      if (email != null && !"".equals(email))
       {
-         predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
+         predicatesList.add(builder.like(root.<String> get("email"), '%' + email + '%'));
+      }
+      String password = this.example.getPassword();
+      if (password != null && !"".equals(password))
+      {
+         predicatesList.add(builder.like(root.<String> get("password"), '%' + password + '%'));
+      }
+      String contactName = this.example.getContactName();
+      if (contactName != null && !"".equals(contactName))
+      {
+         predicatesList.add(builder.like(root.<String> get("contactName"), '%' + contactName + '%'));
+      }
+      String companyName = this.example.getCompanyName();
+      if (companyName != null && !"".equals(companyName))
+      {
+         predicatesList.add(builder.like(root.<String> get("companyName"), '%' + companyName + '%'));
+      }
+      String profile = this.example.getProfile();
+      if (profile != null && !"".equals(profile))
+      {
+         predicatesList.add(builder.like(root.<String> get("profile"), '%' + profile + '%'));
       }
 
       return predicatesList.toArray(new Predicate[predicatesList.size()]);
    }
 
-   public List<Area> getPageItems()
+   public List<Person> getPageItems()
    {
       return this.pageItems;
    }
@@ -245,17 +267,17 @@ public class AreaBean implements Serializable
    }
 
    /*
-    * Support listing and POSTing back Area entities (e.g. from inside an
+    * Support listing and POSTing back Person entities (e.g. from inside an
     * HtmlSelectOneMenu)
     */
 
-   public List<Area> getAll()
+   public List<Person> getAll()
    {
 
-      CriteriaQuery<Area> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Area.class);
+      CriteriaQuery<Person> criteria = this.entityManager
+            .getCriteriaBuilder().createQuery(Person.class);
       return this.entityManager.createQuery(
-            criteria.select(criteria.from(Area.class))).getResultList();
+            criteria.select(criteria.from(Person.class))).getResultList();
    }
 
    @Resource
@@ -264,7 +286,7 @@ public class AreaBean implements Serializable
    public Converter getConverter()
    {
 
-      final AreaBean ejbProxy = this.sessionContext.getBusinessObject(AreaBean.class);
+      final PersonBean ejbProxy = this.sessionContext.getBusinessObject(PersonBean.class);
 
       return new Converter()
       {
@@ -287,7 +309,7 @@ public class AreaBean implements Serializable
                return "";
             }
 
-            return String.valueOf(((Area) value).getId());
+            return String.valueOf(((Person) value).getId());
          }
       };
    }
@@ -296,17 +318,17 @@ public class AreaBean implements Serializable
     * Support adding children to bidirectional, one-to-many tables
     */
 
-   private Area add = new Area();
+   private Person add = new Person();
 
-   public Area getAdd()
+   public Person getAdd()
    {
       return this.add;
    }
 
-   public Area getAdded()
+   public Person getAdded()
    {
-      Area added = this.add;
-      this.add = new Area();
+      Person added = this.add;
+      this.add = new Person();
       return added;
    }
 }
