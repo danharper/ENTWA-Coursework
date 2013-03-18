@@ -19,7 +19,7 @@
         <li><h:link value="Ideas" outcome="/idea/search"/>  <span class="divider">/</span></li>
         <li class="active">Areas</li>
     </ui:define>
-    
+
     <ui:define name="action">
         <h:link value="Add New Area" outcome="/area/create" styleClass="btn btn-primary pull-right"/>
     </ui:define>
@@ -49,9 +49,11 @@
             </h:column>
         </h:dataTable>
 
-        <ui:include src="/resources/scaffold/paginator.xhtml">
-            <ui:param name="paginatorBean" value="#{areaBean}"/>
-        </ui:include>
+        <h:form id="paginate" styleClass="well form-search">
+            <ui:include src="/resources/scaffold/paginator.xhtml">
+                <ui:param name="paginatorBean" value="#{areaBean}"/>
+            </ui:include>
+        </h:form>
 
     </ui:define>
 
