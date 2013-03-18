@@ -164,7 +164,7 @@ public abstract class AbstractBean<T> implements Serializable
 
     public int getPageSize()
     {
-        return 1;
+        return 5;
     }
 
     public void search()
