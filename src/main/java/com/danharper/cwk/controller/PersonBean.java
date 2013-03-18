@@ -273,7 +273,7 @@ public class PersonBean implements Serializable
 
    public List<Person> getAll()
    {
-
+       // service findAll
       CriteriaQuery<Person> criteria = this.entityManager
             .getCriteriaBuilder().createQuery(Person.class);
       return this.entityManager.createQuery(

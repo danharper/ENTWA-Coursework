@@ -1,4 +1,4 @@
-package com.danharper.cwk.controller;
+package com.danharper.cwk.view;
 
 import java.util.ArrayList;
 import java.util.Collection;

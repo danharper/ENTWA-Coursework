@@ -1,7 +1,6 @@
-package com.danharper.cwk.controller;
+package com.danharper.cwk.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,17 +14,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import com.danharper.cwk.domain.Idea;
-import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.service.IdeaService;
+import javax.ejb.EJB;
 
 /**
  * Backing bean for Idea entities.
@@ -42,6 +34,11 @@ import com.danharper.cwk.domain.Person;
 @ConversationScoped
 public class IdeaBean implements Serializable
 {
+    
+    public IdeaBean()
+    {
+        
+    }
 
    private static final long serialVersionUID = 1L;
 
@@ -71,8 +68,11 @@ public class IdeaBean implements Serializable
    @Inject
    private Conversation conversation;
 
-   @PersistenceContext(type = PersistenceContextType.EXTENDED)
-   private EntityManager entityManager;
+   //@PersistenceContext(type = PersistenceContextType.EXTENDED)
+   //private EntityManager entityManager;
+   
+   @EJB
+   private IdeaService ideaService;
 
    public String create()
    {
@@ -107,7 +107,7 @@ public class IdeaBean implements Serializable
    public Idea findById(Long id)
    {
 
-      return this.entityManager.find(Idea.class, id);
+      return this.ideaService.find(id);
    }
 
    /*
@@ -122,12 +122,12 @@ public class IdeaBean implements Serializable
       {
          if (this.id == null)
          {
-            this.entityManager.persist(this.idea);
+            this.ideaService.create(this.idea);
             return "search?faces-redirect=true";
          }
          else
          {
-            this.entityManager.merge(this.idea);
+            this.ideaService.update(this.idea);
             return "view?faces-redirect=true&id=" + this.idea.getId();
          }
       }
@@ -144,8 +144,7 @@ public class IdeaBean implements Serializable
 
       try
       {
-         this.entityManager.remove(findById(getId()));
-         this.entityManager.flush();
+         this.ideaService.remove(findById(getId()));
          return "search?faces-redirect=true";
       }
       catch (Exception e)
@@ -197,58 +196,60 @@ public class IdeaBean implements Serializable
 
    public void paginate()
    {
+       this.count = ideaService.count();
+       this.pageItems = ideaService.findRange(this.page, getPageSize());
 
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-
-      // Populate this.count
-
-      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-      Root<Idea> root = countCriteria.from(Idea.class);
-      countCriteria = countCriteria.select(builder.count(root)).where(
-            getSearchPredicates(root));
-      this.count = this.entityManager.createQuery(countCriteria)
-            .getSingleResult();
-
-      // Populate this.pageItems
-
-      CriteriaQuery<Idea> criteria = builder.createQuery(Idea.class);
-      root = criteria.from(Idea.class);
-      TypedQuery<Idea> query = this.entityManager.createQuery(criteria
-            .select(root).where(getSearchPredicates(root)));
-      query.setFirstResult(this.page * getPageSize()).setMaxResults(
-            getPageSize());
-      this.pageItems = query.getResultList();
+//      CriteriaBuilder builder = ideaService.getEntityManager().getCriteriaBuilder();
+//
+//      // Populate this.count
+//
+//      CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+//      Root<Idea> root = countCriteria.from(Idea.class);
+//      countCriteria = countCriteria.select(builder.count(root)).where(
+//            getSearchPredicates(root));
+//      this.count = ideaService.getEntityManager().createQuery(countCriteria)
+//            .getSingleResult();
+//
+//      // Populate this.pageItems
+//
+//      CriteriaQuery<Idea> criteria = builder.createQuery(Idea.class);
+//      root = criteria.from(Idea.class);
+//      TypedQuery<Idea> query = ideaService.getEntityManager().createQuery(criteria
+//            .select(root).where(getSearchPredicates(root)));
+//      query.setFirstResult(this.page * getPageSize()).setMaxResults(
+//            getPageSize());
+//      this.pageItems = query.getResultList();
    }
 
-   private Predicate[] getSearchPredicates(Root<Idea> root)
-   {
-
-      CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-      List<Predicate> predicatesList = new ArrayList<Predicate>();
-
-      String title = this.example.getTitle();
-      if (title != null && !"".equals(title))
-      {
-         predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
-      }
-      String details = this.example.getDetails();
-      if (details != null && !"".equals(details))
-      {
-         predicatesList.add(builder.like(root.<String> get("details"), '%' + details + '%'));
-      }
-      Person person = this.example.getPerson();
-      if (person != null)
-      {
-         predicatesList.add(builder.equal(root.get("person"), person));
-      }
-      int stateType = this.example.getStateType();
-      if (stateType != 0)
-      {
-         predicatesList.add(builder.equal(root.get("stateType"), stateType));
-      }
-
-      return predicatesList.toArray(new Predicate[predicatesList.size()]);
-   }
+//   private Predicate[] getSearchPredicates(Root<Idea> root)
+//   {
+//
+//      CriteriaBuilder builder = ideaService.getEntityManager().getCriteriaBuilder();
+//      List<Predicate> predicatesList = new ArrayList<Predicate>();
+//
+//      String title = this.example.getTitle();
+//      if (title != null && !"".equals(title))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("title"), '%' + title + '%'));
+//      }
+//      String details = this.example.getDetails();
+//      if (details != null && !"".equals(details))
+//      {
+//         predicatesList.add(builder.like(root.<String> get("details"), '%' + details + '%'));
+//      }
+//      Person person = this.example.getPerson();
+//      if (person != null)
+//      {
+//         predicatesList.add(builder.equal(root.get("person"), person));
+//      }
+//      int stateType = this.example.getStateType();
+//      if (stateType != 0)
+//      {
+//         predicatesList.add(builder.equal(root.get("stateType"), stateType));
+//      }
+//
+//      return predicatesList.toArray(new Predicate[predicatesList.size()]);
+//   }
 
    public List<Idea> getPageItems()
    {
@@ -268,10 +269,11 @@ public class IdeaBean implements Serializable
    public List<Idea> getAll()
    {
 
-      CriteriaQuery<Idea> criteria = this.entityManager
-            .getCriteriaBuilder().createQuery(Idea.class);
-      return this.entityManager.createQuery(
-            criteria.select(criteria.from(Idea.class))).getResultList();
+//      CriteriaQuery<Idea> criteria = this.entityManager
+//            .getCriteriaBuilder().createQuery(Idea.class);
+//      return this.entityManager.createQuery(
+//            criteria.select(criteria.from(Idea.class))).getResultList();
+       return ideaService.findAll();
    }
 
    @Resource
