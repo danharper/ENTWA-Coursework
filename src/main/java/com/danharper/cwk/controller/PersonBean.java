@@ -38,6 +38,12 @@ public class PersonBean extends AbstractBean<Person> implements Serializable
     {
         return this.personService;
     }
+    
+    @Override
+    public int getPageSize()
+    {
+        return 2;
+    }
 
     @Override
     public Converter getConverter()
