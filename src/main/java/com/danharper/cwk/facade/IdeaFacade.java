@@ -34,9 +34,8 @@ public class IdeaFacade extends AbstractFacade<Idea>
     }
 
     @Override
-    protected Predicate[] getSearchPredicates(Root<Idea> root)
+    protected Predicate[] getSearchPredicates(Root<Idea> root, Idea example)
     {
-        Idea example = new Idea();
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         List<Predicate> predicatesList = new ArrayList<Predicate>();
 

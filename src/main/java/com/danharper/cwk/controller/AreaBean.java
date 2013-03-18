@@ -175,8 +175,8 @@ public class AreaBean implements Serializable
 
     public void paginate()
     {
-        this.count = areaService.count();
-        this.pageItems = areaService.findRange(this.page, getPageSize());
+        this.count = areaService.count(this.example);
+        this.pageItems = areaService.findRange(this.page, getPageSize(), this.example);
     }
 
     public List<Area> getPageItems()

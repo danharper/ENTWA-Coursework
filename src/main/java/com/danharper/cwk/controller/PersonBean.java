@@ -181,8 +181,8 @@ public class PersonBean implements Serializable
 
     public void paginate()
     {
-        this.count = personService.count();
-        this.pageItems = personService.findRange(this.page, getPageSize());
+        this.count = personService.count(this.example);
+        this.pageItems = personService.findRange(this.page, getPageSize(), this.example);
     }
 
     public List<Person> getPageItems()

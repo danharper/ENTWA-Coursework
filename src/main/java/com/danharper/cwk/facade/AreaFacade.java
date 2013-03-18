@@ -33,9 +33,8 @@ public class AreaFacade extends AbstractFacade<Area>
     }
 
     @Override
-    protected Predicate[] getSearchPredicates(Root<Area> root)
+    protected Predicate[] getSearchPredicates(Root<Area> root, Area example)
     {
-        Area example = new Area();
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         List<Predicate> predicatesList = new ArrayList<Predicate>();
 

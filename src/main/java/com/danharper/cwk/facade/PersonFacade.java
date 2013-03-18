@@ -33,9 +33,8 @@ public class PersonFacade extends AbstractFacade<Person>
     }
 
     @Override
-    protected Predicate[] getSearchPredicates(Root<Person> root)
+    protected Predicate[] getSearchPredicates(Root<Person> root, Person example)
     {
-        Person example = new Person();
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         List<Predicate> predicatesList = new ArrayList<Predicate>();
 

@@ -169,8 +169,8 @@ public class IdeaBean implements Serializable
 
     public void paginate()
     {
-        this.count = ideaService.count();
-        this.pageItems = ideaService.findRange(this.page, getPageSize());
+        this.count = ideaService.count(this.example);
+        this.pageItems = ideaService.findRange(this.page, getPageSize(), this.example);
     }
 
     public List<Idea> getPageItems()

@@ -56,18 +56,18 @@ public abstract class AbstractFacade<T>
                 criteria.select(criteria.from(entityClass))).getResultList();
     }
 
-    public long count()
+    public long count(T entity)
     {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
         Root<T> root = countCriteria.from(entityClass);
         countCriteria = countCriteria.select(builder.count(root)).where(
-                getSearchPredicates(root));
+                getSearchPredicates(root, entity));
         return getEntityManager().createQuery(countCriteria)
                 .getSingleResult();
     }
 
-    public List<T> findRange(int currentPage, int pageSize)
+    public List<T> findRange(int currentPage, int pageSize, T entity)
     {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
@@ -76,11 +76,11 @@ public abstract class AbstractFacade<T>
       Root<T> root = criteria.from(entityClass);
       
       TypedQuery<T> query = getEntityManager().createQuery(criteria
-            .select(root).where(getSearchPredicates(root)));
+            .select(root).where(getSearchPredicates(root, entity)));
       query.setFirstResult(currentPage * pageSize).setMaxResults(
             pageSize);
       return query.getResultList();
     }
 
-    protected abstract Predicate[] getSearchPredicates(Root<T> root);
+    protected abstract Predicate[] getSearchPredicates(Root<T> root, T entity);
 }

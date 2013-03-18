@@ -40,14 +40,26 @@ public abstract class AbstractService<T>
         getFacade().remove(entity);
     }
     
-    public long count()
+    /**
+     * 
+     * @param entity for the search params
+     * @return 
+     */
+    public long count(T entity)
     {
-        return getFacade().count();
+        return getFacade().count(entity);
     }
     
-    public List<T> findRange(int currentPage, int pageSize)
+    /**
+     * 
+     * @param currentPage
+     * @param pageSize
+     * @param entity for the search params
+     * @return 
+     */
+    public List<T> findRange(int currentPage, int pageSize, T entity)
     {
-        return getFacade().findRange(currentPage, pageSize);
+        return getFacade().findRange(currentPage, pageSize, entity);
     }
     
 }
