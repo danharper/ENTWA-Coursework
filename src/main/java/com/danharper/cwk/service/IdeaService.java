@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
  * @author danharper
  */
 @Stateless
-public class IdeaService extends BaseService<Idea> {
+public class IdeaService extends AbstractService<Idea> {
     
     public IdeaService()
     {

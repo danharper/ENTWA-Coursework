@@ -3,12 +3,12 @@ package com.danharper.cwk.service;
 import com.danharper.cwk.facade.AbstractFacade;
 import java.util.List;
 
-public abstract class BaseService<T>
+public abstract class AbstractService<T>
 {
     
     private Class<T> entityClass;
 
-    public BaseService(Class<T> entityClass)
+    public AbstractService(Class<T> entityClass)
     {
         this.entityClass = entityClass;
     }

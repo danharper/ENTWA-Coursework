@@ -1,6 +1,6 @@
 package com.danharper.cwk.controller;
 
-import com.danharper.cwk.service.BaseService;
+import com.danharper.cwk.service.AbstractService;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +49,7 @@ public abstract class AbstractBean<T> implements Serializable
 //        return null;
 //	}
 //        
-//        public abstract BaseService getService();
+//        public abstract AbstractService getService();
 //
 //	public String create()
 //	{
