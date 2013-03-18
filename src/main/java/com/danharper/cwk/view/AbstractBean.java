@@ -174,8 +174,8 @@ public abstract class AbstractBean<T> implements Serializable
 
     public void paginate()
     {
-        this.count = getService().count();
-        this.pageItems = getService().findRange(this.page, getPageSize());
+        this.count = getService().count(this.example);
+        this.pageItems = getService().findRange(this.page, getPageSize(), this.example);
     }
 
     public List<T> getPageItems()
