@@ -1,23 +1,22 @@
-package com.danharper.cwk.domain;
+package com.danharper.cwk.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Version;
 
 /**
- * Entity representing a Person, or Company
+ * Entity representing an Idea's Area
  * @author danharper
  */
 @Entity
-public class Person implements Serializable
+public class Area implements Serializable
 {
 
    @Id
@@ -29,21 +28,9 @@ public class Person implements Serializable
    private int version = 0;
 
    @Column
-   private String email;
+   private String title;
 
-   @Column
-   private String password;
-
-   @Column
-   private String contactName;
-
-   @Column
-   private String companyName;
-
-   @Column
-   private String profile;
-
-   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+   @ManyToMany(mappedBy = "areas")
    private Set<Idea> ideas = new HashSet<Idea>();
 
    public Long getId()
@@ -83,7 +70,7 @@ public class Person implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((Person) that).id);
+         return id.equals(((Area) that).id);
       }
       return super.equals(that);
    }
@@ -98,60 +85,20 @@ public class Person implements Serializable
       return super.hashCode();
    }
 
-   public String getEmail()
+   public String getTitle()
    {
-      return this.email;
+      return this.title;
    }
 
-   public void setEmail(final String email)
+   public void setTitle(final String title)
    {
-      this.email = email;
-   }
-
-   public String getPassword()
-   {
-      return this.password;
-   }
-
-   public void setPassword(final String password)
-   {
-      this.password = password;
-   }
-
-   public String getContactName()
-   {
-      return this.contactName;
-   }
-
-   public void setContactName(final String contactName)
-   {
-      this.contactName = contactName;
-   }
-
-   public String getCompanyName()
-   {
-      return this.companyName;
-   }
-
-   public void setCompanyName(final String companyName)
-   {
-      this.companyName = companyName;
-   }
-
-   public String getProfile()
-   {
-      return this.profile;
-   }
-
-   public void setProfile(final String profile)
-   {
-      this.profile = profile;
+      this.title = title;
    }
 
    @Override
    public String toString()
    {
-      return contactName + " - " + companyName;
+      return title;
    }
 
    public Set<Idea> getIdeas()

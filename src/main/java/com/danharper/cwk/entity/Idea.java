@@ -1,4 +1,4 @@
-package com.danharper.cwk.domain;
+package com.danharper.cwk.entity;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,22 +1,23 @@
-package com.danharper.cwk.domain;
+package com.danharper.cwk.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 /**
- * Entity representing an Idea's Area
+ * Entity representing a Person, or Company
  * @author danharper
  */
 @Entity
-public class Area implements Serializable
+public class Person implements Serializable
 {
 
    @Id
@@ -28,9 +29,21 @@ public class Area implements Serializable
    private int version = 0;
 
    @Column
-   private String title;
+   private String email;
 
-   @ManyToMany(mappedBy = "areas")
+   @Column
+   private String password;
+
+   @Column
+   private String contactName;
+
+   @Column
+   private String companyName;
+
+   @Column
+   private String profile;
+
+   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
    private Set<Idea> ideas = new HashSet<Idea>();
 
    public Long getId()
@@ -70,7 +83,7 @@ public class Area implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((Area) that).id);
+         return id.equals(((Person) that).id);
       }
       return super.equals(that);
    }
@@ -85,20 +98,60 @@ public class Area implements Serializable
       return super.hashCode();
    }
 
-   public String getTitle()
+   public String getEmail()
    {
-      return this.title;
+      return this.email;
    }
 
-   public void setTitle(final String title)
+   public void setEmail(final String email)
    {
-      this.title = title;
+      this.email = email;
+   }
+
+   public String getPassword()
+   {
+      return this.password;
+   }
+
+   public void setPassword(final String password)
+   {
+      this.password = password;
+   }
+
+   public String getContactName()
+   {
+      return this.contactName;
+   }
+
+   public void setContactName(final String contactName)
+   {
+      this.contactName = contactName;
+   }
+
+   public String getCompanyName()
+   {
+      return this.companyName;
+   }
+
+   public void setCompanyName(final String companyName)
+   {
+      this.companyName = companyName;
+   }
+
+   public String getProfile()
+   {
+      return this.profile;
+   }
+
+   public void setProfile(final String profile)
+   {
+      this.profile = profile;
    }
 
    @Override
    public String toString()
    {
-      return title;
+      return contactName + " - " + companyName;
    }
 
    public Set<Idea> getIdeas()

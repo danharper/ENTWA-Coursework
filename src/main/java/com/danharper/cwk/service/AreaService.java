@@ -1,6 +1,6 @@
 package com.danharper.cwk.service;
 
-import com.danharper.cwk.domain.Area;
+import com.danharper.cwk.entity.Area;
 import com.danharper.cwk.facade.AbstractFacade;
 import com.danharper.cwk.facade.AreaFacade;
 import javax.ejb.EJB;

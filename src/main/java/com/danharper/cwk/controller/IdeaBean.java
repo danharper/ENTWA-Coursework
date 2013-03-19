@@ -1,6 +1,6 @@
 package com.danharper.cwk.controller;
 
-import com.danharper.cwk.domain.Idea;
+import com.danharper.cwk.entity.Idea;
 import com.danharper.cwk.service.AbstractService;
 import com.danharper.cwk.service.IdeaService;
 import java.io.Serializable;

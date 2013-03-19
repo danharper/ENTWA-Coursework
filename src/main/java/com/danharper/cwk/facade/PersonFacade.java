@@ -1,6 +1,6 @@
 package com.danharper.cwk.facade;
 
-import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.entity.Person;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;

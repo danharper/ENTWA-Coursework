@@ -1,6 +1,6 @@
 package com.danharper.cwk.service;
 
-import com.danharper.cwk.domain.Idea;
+import com.danharper.cwk.entity.Idea;
 import com.danharper.cwk.facade.AbstractFacade;
 import com.danharper.cwk.facade.IdeaFacade;
 import javax.ejb.EJB;

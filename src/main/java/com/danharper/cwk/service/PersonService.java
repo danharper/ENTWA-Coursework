@@ -1,6 +1,6 @@
 package com.danharper.cwk.service;
 
-import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.entity.Person;
 import com.danharper.cwk.facade.AbstractFacade;
 import com.danharper.cwk.facade.PersonFacade;
 import javax.ejb.EJB;

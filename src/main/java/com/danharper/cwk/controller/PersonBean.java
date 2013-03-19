@@ -1,6 +1,6 @@
 package com.danharper.cwk.controller;
 
-import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.entity.Person;
 import com.danharper.cwk.service.AbstractService;
 import com.danharper.cwk.service.PersonService;
 import java.io.Serializable;
