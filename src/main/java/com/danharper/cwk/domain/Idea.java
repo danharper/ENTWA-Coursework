@@ -1,24 +1,27 @@
 package com.danharper.cwk.domain;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-import java.lang.Override;
 import java.util.Date;
 import java.util.HashMap;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
+/**
+ * Entity representing an Idea
+ * @author danharper
+ */
 @Entity
 public class Idea implements Serializable
 {
@@ -174,6 +177,11 @@ public class Idea implements Serializable
       this.stateType = stateType;
    }
    
+   /**
+    * Retrieve a human readable version of the Idea's "State"
+    * eg. Pending, Active, Assigned and Withdrawn
+    * @return The state
+    */
    public String getState()
    {
        return stateMap.get(this.stateType);

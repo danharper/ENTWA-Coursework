@@ -1,8 +1,5 @@
 package com.danharper.cwk.facade;
 
-import com.danharper.cwk.domain.Idea;
-import com.danharper.cwk.domain.Person;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -12,8 +9,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- *
+ * Core functionality for majority of basic DAO tasks
  * @author danharper
+ * @param <T> Entity class being represented
  */
 public abstract class AbstractFacade<T>
 {
@@ -25,30 +23,57 @@ public abstract class AbstractFacade<T>
         this.entityClass = entityClass;
     }
 
+    /**
+     * Retrieve the Entity Manager used for accessing persistence of entities
+     * @return 
+     */
     protected abstract EntityManager getEntityManager();
 
+    /**
+     * Persist a new instance of T (the given entity class)
+     * @param entity The entity to persist
+     * @return The entity provided
+     */
     public T create(T entity)
     {
         getEntityManager().persist(entity);
         return entity;
     }
 
+    /**
+     * Update the given entity in the persistence layer
+     * @param entity The entity to update
+     * @return The entity provided
+     */
     public T update(T entity)
     {
         return getEntityManager().merge(entity);
     }
 
+    /**
+     * Remove (un-persist) the given entity
+     * @param entity The entity to remove
+     */
     public void remove(T entity)
     {
         getEntityManager().remove(getEntityManager().merge(entity));
         getEntityManager().flush();
     }
 
+    /**
+     * Retrieve the entity matching the given ID from the persistence layer
+     * @param id The ID to find in the database
+     * @return The found entity
+     */
     public T find(Object id)
     {
         return getEntityManager().find(entityClass, id);
     }
 
+    /**
+     * Retrieve all entities from the persistence layer
+     * @return List of all entities
+     */
     public List<T> findAll()
     {
         CriteriaQuery criteria = getEntityManager().getCriteriaBuilder().createQuery();
@@ -56,6 +81,11 @@ public abstract class AbstractFacade<T>
                 criteria.select(criteria.from(entityClass))).getResultList();
     }
 
+    /**
+     * Retrieve the total number of entities persisted
+     * @param entity
+     * @return Number of entities
+     */
     public long count(T entity)
     {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
@@ -67,6 +97,13 @@ public abstract class AbstractFacade<T>
                 .getSingleResult();
     }
 
+    /**
+     * Retrieve all entities, paginated
+     * @param currentPage The current page being accessed
+     * @param pageSize The number of entities per page
+     * @param entity An entity containing data to search on (empty for everything)
+     * @return List of entities
+     */
     public List<T> findRange(int currentPage, int pageSize, T entity)
     {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
@@ -82,5 +119,11 @@ public abstract class AbstractFacade<T>
       return query.getResultList();
     }
 
+    /**
+     * Access search parameters on given entity
+     * @param root The root search request
+     * @param entity Entity to access search parameters on
+     * @return An array of search predicates
+     */
     protected abstract Predicate[] getSearchPredicates(Root<T> root, T entity);
 }

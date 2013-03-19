@@ -1,19 +1,21 @@
 package com.danharper.cwk.domain;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-import java.lang.Override;
-import com.danharper.cwk.domain.Idea;
-import java.util.Set;
-import java.util.HashSet;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import javax.persistence.Version;
 
+/**
+ * Entity representing a Person, or Company
+ * @author danharper
+ */
 @Entity
 public class Person implements Serializable
 {

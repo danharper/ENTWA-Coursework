@@ -7,7 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
- *
+ * Simplified access to Idea entities and business logic
  * @author danharper
  */
 @Stateless

@@ -12,12 +12,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
+/**
+ * Controller for accessing and modifying Idea Areas
+ * @author danharper
+ */
 @Named
 @Stateful
 @ConversationScoped
 public class AreaBean extends AbstractBean<Area> implements Serializable
 {
 
+    /**
+     *
+     */
     public AreaBean()
     {
         super(Area.class);
@@ -26,6 +33,10 @@ public class AreaBean extends AbstractBean<Area> implements Serializable
     @EJB
     private AreaService areaService;
     
+    /**
+     *
+     * @return
+     */
     public Area getArea()
     {
         return this.entity;

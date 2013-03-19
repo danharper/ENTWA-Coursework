@@ -12,12 +12,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
+/**
+ * Controller for accessing and modifying Ideas
+ * @author danharper
+ */
 @Named
 @Stateful
 @ConversationScoped
 public class IdeaBean extends AbstractBean<Idea> implements Serializable
 {
 
+    /**
+     *
+     */
     public IdeaBean()
     {
         super(Idea.class);
@@ -26,6 +33,10 @@ public class IdeaBean extends AbstractBean<Idea> implements Serializable
     @EJB
     private IdeaService ideaService;
     
+    /**
+     *
+     * @return
+     */
     public Idea getIdea()
     {
         return this.entity;

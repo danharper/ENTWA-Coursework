@@ -12,12 +12,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
 
+/**
+ * Controller for accessing and modifying People and Companies
+ * @author danharper
+ */
 @Named
 @Stateful
 @ConversationScoped
 public class PersonBean extends AbstractBean<Person> implements Serializable
 {
 
+    /**
+     *
+     */
     public PersonBean()
     {
         super(Person.class);
@@ -26,6 +33,10 @@ public class PersonBean extends AbstractBean<Person> implements Serializable
     @EJB
     private PersonService personService;
     
+    /**
+     *
+     * @return
+     */
     public Person getPerson()
     {
         return this.entity;
