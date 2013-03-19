@@ -1,4 +1,4 @@
-package com.danharper.cwk.view;
+package com.danharper.cwk.controller;
 
 import java.io.Serializable;
 import java.util.List;

@@ -11,7 +11,6 @@ import javax.inject.Named;
 
 import com.danharper.cwk.service.AbstractService;
 import com.danharper.cwk.service.AreaService;
-import com.danharper.cwk.view.AbstractBean;
 import javax.ejb.EJB;
 
 @Named
