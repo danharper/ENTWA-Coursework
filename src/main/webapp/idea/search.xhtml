@@ -4,7 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/resources/scaffold/pageTemplate.xhtml">
+                template="/resources/scaffold/pageTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <f:metadata>
         <f:viewParam name="page" value="#{ideaBean.page}"/>
@@ -26,94 +27,100 @@
     <ui:define name="footer"/>
 
     <ui:define name="main">
-        <h:form id="search" styleClass="well form-search">
-            <f:validateBean disabled="true">
-                <h:inputText id="ideaBeanExampleTitle" value="#{ideaBean.example.title}" styleClass="input-medium" placeholder="Title&hellip;" />
-                &nbsp;
-                <h:selectOneMenu id="ideaBeanExamplePerson" styleClass="input-medium" converter="#{personBean.converter}" value="#{ideaBean.example.person}">
-                    <f:selectItem itemLabel="Person&hellip;" noSelectionOption="true" />
-                    <f:selectItems value="#{personBean.all}" />
-                </h:selectOneMenu>
-                &nbsp;
-                <h:selectOneMenu id="ideaBeanExampleStateType" styleClass="input-medium" value="#{ideaBean.example.stateType}">
-                    <f:selectItem itemLabel="State&hellip;" itemValue="0" />
-                    <f:selectItem itemLabel="Pending" itemValue="1" />
-                    <f:selectItem itemLabel="Active" itemValue="2" />
-                    <f:selectItem itemLabel="Assigned" itemValue="3" />
-                    <f:selectItem itemLabel="Withdrawn" itemValue="4" />
-                </h:selectOneMenu>
-                &nbsp;
-                <h:commandLink value="Search" action="#{ideaBean.search}" styleClass="btn"/>
-                <ui:remove>
-                    <h:commandLink value="Create New" action="#{ideaBean.create}" styleClass="btn btn-primary"/>
-                </ui:remove>
-            </f:validateBean>
-        </h:form>
+        <c:if test="#{empty ideaBean.all}">
+            <p>No ideas exist yet. Add one with the button above.</p>
+            <p>Add some Areas and a Company account first.</p>
+        </c:if>
+        <c:if test="#{not empty ideaBean.all}">
+            <h:form id="search" styleClass="well form-search">
+                <f:validateBean disabled="true">
+                    <h:inputText id="ideaBeanExampleTitle" value="#{ideaBean.example.title}" styleClass="input-medium" placeholder="Title&hellip;" />
+                    &nbsp;
+                    <h:selectOneMenu id="ideaBeanExamplePerson" styleClass="input-medium" converter="#{personBean.converter}" value="#{ideaBean.example.person}">
+                        <f:selectItem itemLabel="Person&hellip;" noSelectionOption="true" />
+                        <f:selectItems value="#{personBean.all}" />
+                    </h:selectOneMenu>
+                    &nbsp;
+                    <h:selectOneMenu id="ideaBeanExampleStateType" styleClass="input-medium" value="#{ideaBean.example.stateType}">
+                        <f:selectItem itemLabel="State&hellip;" itemValue="0" />
+                        <f:selectItem itemLabel="Pending" itemValue="1" />
+                        <f:selectItem itemLabel="Active" itemValue="2" />
+                        <f:selectItem itemLabel="Assigned" itemValue="3" />
+                        <f:selectItem itemLabel="Withdrawn" itemValue="4" />
+                    </h:selectOneMenu>
+                    &nbsp;
+                    <h:commandLink value="Search" action="#{ideaBean.search}" styleClass="btn"/>
+                    <ui:remove>
+                        <h:commandLink value="Create New" action="#{ideaBean.create}" styleClass="btn btn-primary"/>
+                    </ui:remove>
+                </f:validateBean>
+            </h:form>
 
-        <h:dataTable id="ideaBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{ideaBean.pageItems}" var="_item">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Title"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemTitle" value="#{_item.title}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Details"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemDetails" value="#{_item.details}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Company"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemPersonCompany" value="#{_item.person.companyName}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Contact"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemPerson" value="#{_item.person.contactName}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="State Type"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemStateType" value="#{_item.getState()}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Created"/>
-                </f:facet>
-                <h:link outcome="/idea/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
-                        <f:convertDateTime type="both"/>
-                    </h:outputText>
-                </h:link>
-            </h:column>
-        </h:dataTable>
-        
-        <h:form id="paginate" styleClass="well form-search">
-            <ui:include src="/resources/scaffold/paginator.xhtml">
-                <ui:param name="paginatorBean" value="#{ideaBean}"/>
-            </ui:include>
-        </h:form>
+            <h:dataTable id="ideaBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{ideaBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Title"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemTitle" value="#{_item.title}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Details"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemDetails" value="#{_item.details}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Company"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemPersonCompany" value="#{_item.person.companyName}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Contact"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemPerson" value="#{_item.person.contactName}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="State Type"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemStateType" value="#{_item.getState()}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Created"/>
+                    </f:facet>
+                    <h:link outcome="/idea/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemCreatedAt" value="#{_item.createdAt}">
+                            <f:convertDateTime type="both"/>
+                        </h:outputText>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
+
+            <h:form id="paginate" styleClass="well form-search">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{ideaBean}"/>
+                </ui:include>
+            </h:form>
+        </c:if>
 
     </ui:define>
 

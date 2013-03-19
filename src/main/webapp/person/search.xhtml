@@ -4,7 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/resources/scaffold/pageTemplate.xhtml">
+                template="/resources/scaffold/pageTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <f:metadata>
         <f:viewParam name="page" value="#{personBean.page}"/>
@@ -26,51 +27,54 @@
     <ui:define name="footer"/>
 
     <ui:define name="main">
-        <h:form id="search" styleClass="well form-search">
-            <f:validateBean disabled="true">
-                <h:inputText id="personBeanExampleCompanyName" value="#{personBean.example.companyName}" styleClass="input-medium search-query"/>
-                <h:commandLink value="Search" action="#{personBean.search}" styleClass="btn"/>
-                <ui:remove>
-                    <h:commandLink value="Create New" action="#{personBean.create}" styleClass="btn btn-primary"/>
-                </ui:remove>
-            </f:validateBean>
-        </h:form>
+        <c:if test="#{empty personBean.all}"><p>No Company profiles exist yet. Add one with the button above.</p></c:if>
+        <c:if test="#{not empty personBean.all}">
+            <h:form id="search" styleClass="well form-search">
+                <f:validateBean disabled="true">
+                    <h:inputText id="personBeanExampleCompanyName" value="#{personBean.example.companyName}" styleClass="input-medium search-query"/>
+                    <h:commandLink value="Search" action="#{personBean.search}" styleClass="btn"/>
+                    <ui:remove>
+                        <h:commandLink value="Create New" action="#{personBean.create}" styleClass="btn btn-primary"/>
+                    </ui:remove>
+                </f:validateBean>
+            </h:form>
 
-        <h:dataTable id="personBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{personBean.pageItems}" var="_item">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Company"/>
-                </f:facet>
-                <h:link outcome="/person/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemCompanyName" value="#{_item.companyName}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Contact"/>
-                </f:facet>
-                <h:link outcome="/person/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemContactName" value="#{_item.contactName}"/>
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="# of Ideas"/>
-                </f:facet>
-                <h:link outcome="/person/view">
-                    <f:param name="id" value="#{_item.id}"/>
-                    <h:outputText id="itemIdeas" value="#{_item.ideas.size()}"/>
-                </h:link>
-            </h:column>
-        </h:dataTable>
+            <h:dataTable id="personBeanPageItems" styleClass="data-table table table-striped table-bordered" value="#{personBean.pageItems}" var="_item">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Company"/>
+                    </f:facet>
+                    <h:link outcome="/person/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemCompanyName" value="#{_item.companyName}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Contact"/>
+                    </f:facet>
+                    <h:link outcome="/person/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemContactName" value="#{_item.contactName}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="# of Ideas"/>
+                    </f:facet>
+                    <h:link outcome="/person/view">
+                        <f:param name="id" value="#{_item.id}"/>
+                        <h:outputText id="itemIdeas" value="#{_item.ideas.size()}"/>
+                    </h:link>
+                </h:column>
+            </h:dataTable>
 
-        <h:form id="paginate" styleClass="well form-search">
-            <ui:include src="/resources/scaffold/paginator.xhtml">
-                <ui:param name="paginatorBean" value="#{personBean}"/>
-            </ui:include>
-        </h:form>
+            <h:form id="paginate" styleClass="well form-search">
+                <ui:include src="/resources/scaffold/paginator.xhtml">
+                    <ui:param name="paginatorBean" value="#{personBean}"/>
+                </ui:include>
+            </h:form>
+        </c:if>
 
     </ui:define>
 
