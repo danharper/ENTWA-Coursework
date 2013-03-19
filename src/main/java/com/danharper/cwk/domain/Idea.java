@@ -50,14 +50,16 @@ public class Idea implements Serializable
    private int stateType;
    
    @Transient
-   private Map<Integer, String> stateMap = new HashMap<Integer, String>();
+   private static Map<Integer, String> stateMap = new HashMap<Integer, String>()
+   {{
+      put(1, "Pending");
+      put(2, "Active");
+      put(3, "Assigned");
+      put(4, "Withdrawn");
+   }};
    
    public Idea()
    {
-       stateMap.put(1, "Pending");
-       stateMap.put(2, "Active");
-       stateMap.put(3, "Assigned");
-       stateMap.put(4, "Withdrawn");
    }
 
    public Long getId()
