@@ -1,17 +1,16 @@
 package com.danharper.cwk.controller;
 
 import com.danharper.cwk.domain.Person;
+import com.danharper.cwk.service.AbstractService;
+import com.danharper.cwk.service.PersonService;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
-
-import com.danharper.cwk.service.AbstractService;
-import com.danharper.cwk.service.PersonService;
-import javax.ejb.EJB;
 
 @Named
 @Stateful

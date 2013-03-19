@@ -1,8 +1,10 @@
 package com.danharper.cwk.controller;
 
+import com.danharper.cwk.service.AbstractService;
 import java.io.Serializable;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.enterprise.context.Conversation;
@@ -10,10 +12,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Inject;
-
-import com.danharper.cwk.service.AbstractService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class AbstractBean<T> implements Serializable
 {
